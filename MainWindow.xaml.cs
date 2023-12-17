@@ -26,11 +26,11 @@ namespace Quizyy_wpf
 		private void GenerateButtons()
 		{
 			string[] buttonLabels = { "Fiszki", "Dopasowanie pojęć", "Podanie odpowiedzi", "Wybór odpowiedzi" };
-			FlashCardsController flashCardsController = new FlashCardsController();
-			FitController matchingController = new FitController();
-			WriteController answeringController = new WriteController();
-			ChooseController choiceController = new ChooseController();
-			EasterEggController secretobject = new EasterEggController();
+			FlashCardsController flashCardsController = new FlashCardsController(this);
+			FitController matchingController = new FitController(this);
+			WriteController answeringController = new WriteController(this);
+			ChooseController choiceController = new ChooseController(this);
+			EasterEggController secretobject = new EasterEggController(this);
 
 			StackPanel buttonPanel = new StackPanel
 			{
@@ -68,6 +68,7 @@ namespace Quizyy_wpf
 
 				 buttonPanel.Children.Add(button);
 			}
+			MainGrid.Children.Add(buttonPanel);
 		}
 
 

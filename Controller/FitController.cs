@@ -8,6 +8,11 @@ namespace Quizyy_wpf.Controller
 {
     class FitController
     {
+		private MainWindow mainWindow;
+		public FitController(MainWindow mainView)
+		{
+			mainWindow = mainView;
+		}
 		public void OpenMode()
 		{
 
