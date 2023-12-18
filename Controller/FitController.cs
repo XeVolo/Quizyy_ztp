@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using System.Reflection.Metadata;
 
 namespace Quizyy_wpf.Controller
 {
@@ -14,6 +15,13 @@ namespace Quizyy_wpf.Controller
 		private MainWindow mainWindow;
 		private StackPanel stackPanel1;
 		private StackPanel stackPanel2;
+		private TextBlock DisplayTextBlock1;
+		private TextBlock DisplayTextBlock2;
+		private TextBlock DisplayTextBlock3;
+		private string? concept;
+		private string? definition;
+		private int? conceptid;
+		private int? definitionid;
 		public FitController(MainWindow mainView)
 		{
 			mainWindow = mainView;
@@ -73,6 +81,7 @@ namespace Quizyy_wpf.Controller
 				Button leftButtons = new Button
 				{
 					Content = list[i].concept,
+					Tag = list[i].id,
 					Margin = new Thickness(10,5,300,5),
 					Width = 200,
 					Height = 30
@@ -88,27 +97,83 @@ namespace Quizyy_wpf.Controller
 				Button rightButtons = new Button
 				{
 					Content = list[i].definition,
+					Tag = list[i].id,
 					Margin = new Thickness(300,5,0,5),
 					Width = 200,
 					Height = 30
 				};
-				rightButtons.Click += LeftButtonClick;
+				rightButtons.Click += RightButtonClick;
 
 				stackPanel2.Children.Add(rightButtons);
 			}
-			Grid.SetColumn(stackPanel1, 0);
-			Grid.SetColumn(stackPanel2, 1);
-			Grid.SetRow(stackPanel2, 0);
 			mainWindow.MainGrid.Children.Add(stackPanel1);
 			mainWindow.MainGrid.Children.Add(stackPanel2);
+			DisplayTextBlock1 = new TextBlock
+			{
+				Margin = new Thickness(10, 300, 300, 5),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Height = 30
+			};
+			DisplayTextBlock2 = new TextBlock
+			{
+				Margin = new Thickness(300, 300, 0, 5),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Height = 30
+			};
+			DisplayTextBlock3 = new TextBlock
+			{
+				Margin = new Thickness(0, 350, 0, 0),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Height = 30
+			};
+			mainWindow.MainGrid.Children.Add(DisplayTextBlock1);
+			mainWindow.MainGrid.Children.Add(DisplayTextBlock2);
+			mainWindow.MainGrid.Children.Add(DisplayTextBlock3);
 		}
 		private void LeftButtonClick(object sender, RoutedEventArgs e)
 		{
+			
+			if (sender is Button clickedButton)
+			{
+				concept = clickedButton.Content.ToString();
+				conceptid = Convert.ToInt32(clickedButton.Tag);
+				DisplayTextBlock1.Text = "Wybrano: "+concept;
+			}
+			if (concept != null && definition != null) 
+			{
+				CheckCorrectness();
+			}
 
+			
 		}
 		private void RightButtonClick(object sender, RoutedEventArgs e)
 		{
-
+			
+			if (sender is Button clickedButton)
+			{
+				definition = clickedButton.Content.ToString();
+				definitionid = Convert.ToInt32(clickedButton.Tag);
+				DisplayTextBlock2.Text = "Wybrano: " + definition;
+			}
+			if (concept != null && definition != null)
+			{
+				CheckCorrectness();
+			}
+		}
+		private void CheckCorrectness()
+		{
+			if(conceptid== definitionid)
+			{
+				DisplayTextBlock3.Text = "Połączenie poprawne";
+			}
+			else
+			{
+				DisplayTextBlock3.Text = "Połączenie błędne";
+			}
+			concept = null;
+			definition = null;
+			conceptid = null;
+			definitionid = null;
 		}
 	}
 }
