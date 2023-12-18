@@ -22,6 +22,9 @@ namespace Quizyy_wpf.Controller
 		private string? definition;
 		private int? conceptid;
 		private int? definitionid;
+		private Button? chosen1;
+		private Button? chosen2;
+		private int resoult = 0;
 		public FitController(MainWindow mainView)
 		{
 			mainWindow = mainView;
@@ -138,6 +141,7 @@ namespace Quizyy_wpf.Controller
 				concept = clickedButton.Content.ToString();
 				conceptid = Convert.ToInt32(clickedButton.Tag);
 				DisplayTextBlock1.Text = "Wybrano: "+concept;
+				chosen1 = clickedButton;
 			}
 			if (concept != null && definition != null) 
 			{
@@ -154,6 +158,7 @@ namespace Quizyy_wpf.Controller
 				definition = clickedButton.Content.ToString();
 				definitionid = Convert.ToInt32(clickedButton.Tag);
 				DisplayTextBlock2.Text = "Wybrano: " + definition;
+				chosen2 = clickedButton;
 			}
 			if (concept != null && definition != null)
 			{
@@ -162,18 +167,31 @@ namespace Quizyy_wpf.Controller
 		}
 		private void CheckCorrectness()
 		{
-			if(conceptid== definitionid)
+			if (conceptid == definitionid)
 			{
 				DisplayTextBlock3.Text = "Połączenie poprawne";
+				chosen1.Visibility = Visibility.Collapsed;
+				chosen2.Visibility = Visibility.Collapsed;
+				resoult++;
 			}
 			else
 			{
 				DisplayTextBlock3.Text = "Połączenie błędne";
 			}
+			DisplayTextBlock1.Text = "";
+			DisplayTextBlock2.Text = "";
 			concept = null;
 			definition = null;
 			conceptid = null;
 			definitionid = null;
+			chosen1= null; 
+			chosen2= null;
+			if (resoult == 7)
+			{
+				resoult = 0;
+				OpenMode();
+			}
+			
 		}
 	}
 }
