@@ -13,11 +13,11 @@ namespace Quizyy_wpf.Controller
     class FitController
     {
 		private MainWindow mainWindow;
-		private StackPanel stackPanel1;
-		private StackPanel stackPanel2;
-		private TextBlock DisplayTextBlock1;
-		private TextBlock DisplayTextBlock2;
-		private TextBlock DisplayTextBlock3;
+		private StackPanel? stackPanel1;
+		private StackPanel? stackPanel2;
+		private TextBlock? DisplayTextBlock1;
+		private TextBlock? DisplayTextBlock2;
+		private TextBlock? DisplayTextBlock3;
 		private string? concept;
 		private string? definition;
 		private int? conceptid;

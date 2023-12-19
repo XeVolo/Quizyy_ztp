@@ -14,11 +14,11 @@ namespace Quizyy_wpf.Controller
     {
 		private MainWindow mainWindow;
 
-		private StackPanel stackPanel;
-		private Button previousButton;
-		private Button nextButton;
-		private Button contextButton;
-		private TextBlock DisplayTextBlock;
+		private StackPanel? stackPanel;
+		private Button? previousButton;
+		private Button? nextButton;
+		private Button? contextButton;
+		private TextBlock? DisplayTextBlock;
 		List<FlashCardsModel> items = BaseController.GetFlashCardsList();
 		private int currentIndex = 1;
 		private int control = 0;
