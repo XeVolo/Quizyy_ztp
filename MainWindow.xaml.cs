@@ -30,11 +30,6 @@ namespace Quizyy_wpf
 		{
             backButton.Visibility = Visibility.Collapsed;
             string[] buttonLabels = { "Fiszki", "Dopasowanie pojęć", "Podanie odpowiedzi", "Wybór odpowiedzi" };
-			FlashCardsController flashCardsController = new FlashCardsController(this);
-			FitController matchingController = new FitController(this);
-			WriteController answeringController = new WriteController(this);
-			ChooseController choiceController = new ChooseController(this);
-			EasterEggController secretobject = new EasterEggController(this);
 
 			StackPanel buttonPanel = new StackPanel
 			{
