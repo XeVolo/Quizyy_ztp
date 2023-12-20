@@ -1,4 +1,6 @@
 ﻿using Quizyy_wpf.Controller;
+using Quizyy_wpf.View;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,10 +24,12 @@ namespace Quizyy_wpf
 			InitializeComponent();
 			GenerateButtons();
 		}
+        
 
-		private void GenerateButtons()
+		public void GenerateButtons()
 		{
-			string[] buttonLabels = { "Fiszki", "Dopasowanie pojęć", "Podanie odpowiedzi", "Wybór odpowiedzi" };
+            backButton.Visibility = Visibility.Collapsed;
+            string[] buttonLabels = { "Fiszki", "Dopasowanie pojęć", "Podanie odpowiedzi", "Wybór odpowiedzi" };
 			FlashCardsController flashCardsController = new FlashCardsController(this);
 			FitController matchingController = new FitController(this);
 			WriteController answeringController = new WriteController(this);
@@ -52,25 +56,52 @@ namespace Quizyy_wpf
 
 				switch (i)
 				{
-					case 0:
-						button.Click += (sender, e) => flashCardsController.OpenMode();
-						break;
+					case 0:                    
+                        button.Click += FlashCards;				
+                        break;
 					case 1:
-						button.Click += (sender, e) => matchingController.OpenMode();
-						break;
+						button.Click += Fit;                     
+                        break;
 					case 2:
-						button.Click += (sender, e) => answeringController.OpenMode();
-						break;
+						button.Click += Write;                       
+                        break;
 					case 3:
-						button.Click += (sender, e) => choiceController.OpenMode();
-						break;
+						button.Click += Choose;                   
+                        break;
 				}
 
 				 buttonPanel.Children.Add(button);
 			}
 			MainGrid.Children.Add(buttonPanel);
 		}
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentControl.Content = null;
+            MainGrid.Children.Clear();
+			GenerateButtons();
+
+        }
+        private void FlashCards(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Children.Clear();
+            contentControl.Content = new FlashCardsView(this); 
+        }
+        private void Choose(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Children.Clear();
+            contentControl.Content = new ChooseView(this);
+        }
+        private void Fit(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Children.Clear();
+            contentControl.Content = new FitView(this);
+        }
+        private void Write(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Children.Clear();
+            contentControl.Content = new WriteView(this);
+        }
 
 
-	}
+    }
 }

@@ -31,7 +31,8 @@ namespace Quizyy_wpf.Controller
 		}
 		public void OpenMode()
 		{
-			mainWindow.MainGrid.Children.Clear();
+            mainWindow.backButton.Visibility = Visibility.Visible;
+            mainWindow.MainGrid.Children.Clear();
 			NewSet();
 		}
 		private int GetRandom()

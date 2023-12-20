@@ -8,12 +8,26 @@
         Title="MainWindow" Height="450" Width="800"
            
         >
-        
-    <Grid>
-        
- 
 
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         <Grid x:Name="MainGrid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="backButton" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Click="BackButton_Click">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Polygon Points="0,0 70,0 0,70" Fill="LightBlue"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <ContentControl x:Name="contentControl"/>
     </Grid>
-    
+
 </Window>
