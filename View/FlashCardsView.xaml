@@ -7,7 +7,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-       <Grid x:Name="MainGrid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-       <ContentControl x:Name="contentControl"/>
+        <Grid x:Name="MainGrid">
+            
+                <Button x:Name="previousButton"
+                Content="Poprzedni"
+                Margin="0,150,450,0"
+                Width="140"
+                Height="30"
+                Click="PreviousButtonClick"/>
+
+                <Button x:Name="contextButton"
+                Content="Tłumaczenie"
+                Margin="0,250,0,0"
+                Width="140"
+                Height="30"
+                Click="ContextButtonClick"/>
+
+                <Button x:Name="nextButton"
+                Content="Następny"
+                Margin="450,150,0,0"
+                Width="140"
+                Height="30"
+                Click="NextButtonClick"/>
+           
+
+            <TextBlock x:Name="DisplayTextBlock"
+                Margin="0,100,0,0"
+                HorizontalAlignment="Center"
+                Height="30"/>
+        </Grid>
+        <ContentControl x:Name="contentControl"/>
     </Grid>
 </UserControl>

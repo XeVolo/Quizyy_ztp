@@ -72,7 +72,16 @@ namespace Quizyy_wpf.View
                 Content = anslist[drawn[0]],
                 Margin = new Thickness(300, 10, 0, 0),
                 Width = 140,
-                Height = 30
+                Height = 30,
+                /*
+                Background = new SolidColorBrush(Colors.Blue), 
+                Foreground = new SolidColorBrush(Colors.White), 
+                BorderThickness = new Thickness(1), 
+                BorderBrush = new SolidColorBrush(Colors.Blue),
+                FontSize = 14, 
+                FontWeight = FontWeights.Bold,
+                FontStyle = FontStyles.Italic 
+                */
             };
             ansButton1.Click += AnsButtonClick;
             ansButton2 = new Button

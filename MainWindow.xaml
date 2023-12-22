@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Quizyy_wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-           
+        Background="#1C37EF"
         >
 
     <Grid>
@@ -27,7 +27,9 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Image Source="C:\Users\xevol\OneDrive\Pulpit\kck\Quizyy wpf\logo.png" HorizontalAlignment="Center" Height="92" Width="600" Margin="0,20,0,0" VerticalAlignment="Top" Visibility="Visible"/>
         <ContentControl x:Name="contentControl"/>
+
     </Grid>
 
 </Window>
