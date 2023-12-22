@@ -83,14 +83,14 @@ namespace Quizyy_wpf.View
                 Orientation = Orientation.Vertical,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 10, 0, 0)
+                Margin = new Thickness(0, 110, 0, 0)
             };
             stackPanel2 = new StackPanel
             {
                 Orientation = Orientation.Vertical,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 10, 0, 0)
+                Margin = new Thickness(0, 110, 0, 0)
             };
             foreach (int i in drawn)
             {
