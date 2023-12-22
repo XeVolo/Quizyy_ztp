@@ -57,7 +57,7 @@ namespace Quizyy_wpf.View
             {
                 Content = "Poprzedni",
                 Margin = new Thickness(100),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
@@ -67,7 +67,7 @@ namespace Quizyy_wpf.View
             {
                 Content = "Następny",
                 Margin = new Thickness(100),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
@@ -76,7 +76,7 @@ namespace Quizyy_wpf.View
             {
                 Content = "Tłumaczenie",
                 Margin = new Thickness(0, 150, 0, 0),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };

@@ -99,7 +99,7 @@ namespace Quizyy_wpf.View
                     Content = list[i].concept,
                     Tag = list[i].id,
                     Margin = new Thickness(10, 5, 300, 5),
-                    Width = 200,
+                    Width = 250,
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
                 };
@@ -116,7 +116,7 @@ namespace Quizyy_wpf.View
                     Content = list[i].definition,
                     Tag = list[i].id,
                     Margin = new Thickness(300, 5, 0, 5),
-                    Width = 200,
+                    Width = 250,
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
                 };

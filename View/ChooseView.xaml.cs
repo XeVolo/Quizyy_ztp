@@ -71,7 +71,7 @@ namespace Quizyy_wpf.View
             {
                 Content = anslist[drawn[0]],
                 Margin = new Thickness(300, 10, 0, 0),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
@@ -80,7 +80,7 @@ namespace Quizyy_wpf.View
             {
                 Content = anslist[drawn[1]],
                 Margin = new Thickness(300, 10, 0, 0),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
@@ -89,7 +89,7 @@ namespace Quizyy_wpf.View
             {
                 Content = anslist[drawn[2]],
                 Margin = new Thickness(0, 10, 300, 0),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
@@ -98,7 +98,7 @@ namespace Quizyy_wpf.View
             {
                 Content = anslist[drawn[3]],
                 Margin = new Thickness(0, 10, 300, 0),
-                Width = 140,
+                Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };

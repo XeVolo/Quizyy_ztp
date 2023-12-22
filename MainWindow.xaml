@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Quizyy_wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="550" Width="900"
         Background="#1C37EF"
         >
 
@@ -16,16 +16,19 @@
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
-                    <SkewTransform/>
+
                     <RotateTransform Angle="-90"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Button.RenderTransform>
             <Button.Template>
+
                 <ControlTemplate TargetType="Button">
                     <Polygon Points="0,0 70,0 0,70" Fill="LightBlue"/>
+
                 </ControlTemplate>
             </Button.Template>
+
         </Button>
         <Image Source="C:\Users\xevol\OneDrive\Pulpit\kck\Quizyy wpf\logo.png" HorizontalAlignment="Center" Height="92" Width="600" Margin="0,20,0,0" VerticalAlignment="Top" Visibility="Visible"/>
         <ContentControl x:Name="contentControl"/>
