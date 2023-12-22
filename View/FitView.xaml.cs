@@ -100,7 +100,8 @@ namespace Quizyy_wpf.View
                     Tag = list[i].id,
                     Margin = new Thickness(10, 5, 300, 5),
                     Width = 200,
-                    Height = 30
+                    Height = 30,
+                    Style = (Style)FindResource("CustomButtonStyle")
                 };
                 leftButtons.Click += LeftButtonClick;
 
@@ -116,7 +117,8 @@ namespace Quizyy_wpf.View
                     Tag = list[i].id,
                     Margin = new Thickness(300, 5, 0, 5),
                     Width = 200,
-                    Height = 30
+                    Height = 30,
+                    Style = (Style)FindResource("CustomButtonStyle")
                 };
                 rightButtons.Click += RightButtonClick;
 

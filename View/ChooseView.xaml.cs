@@ -73,15 +73,7 @@ namespace Quizyy_wpf.View
                 Margin = new Thickness(300, 10, 0, 0),
                 Width = 140,
                 Height = 30,
-                /*
-                Background = new SolidColorBrush(Colors.Blue), 
-                Foreground = new SolidColorBrush(Colors.White), 
-                BorderThickness = new Thickness(1), 
-                BorderBrush = new SolidColorBrush(Colors.Blue),
-                FontSize = 14, 
-                FontWeight = FontWeights.Bold,
-                FontStyle = FontStyles.Italic 
-                */
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             ansButton1.Click += AnsButtonClick;
             ansButton2 = new Button
@@ -89,7 +81,8 @@ namespace Quizyy_wpf.View
                 Content = anslist[drawn[1]],
                 Margin = new Thickness(300, 10, 0, 0),
                 Width = 140,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             ansButton2.Click += AnsButtonClick;
             ansButton3 = new Button
@@ -97,7 +90,8 @@ namespace Quizyy_wpf.View
                 Content = anslist[drawn[2]],
                 Margin = new Thickness(0, 10, 300, 0),
                 Width = 140,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             ansButton3.Click += AnsButtonClick;
             ansButton4 = new Button
@@ -105,7 +99,8 @@ namespace Quizyy_wpf.View
                 Content = anslist[drawn[3]],
                 Margin = new Thickness(0, 10, 300, 0),
                 Width = 140,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             ansButton4.Click += AnsButtonClick;
             stackPanel1.Children.Add(ansButton1);

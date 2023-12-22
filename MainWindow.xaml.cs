@@ -46,8 +46,9 @@ namespace Quizyy_wpf
 					Content = buttonLabels[i],
 					Margin = new Thickness(30),
 					Width = 140,
-					Height = 30
-				};
+					Height = 30,
+                    Style = (Style)FindResource("CustomButtonStyle")
+                };
 
 				switch (i)
 				{

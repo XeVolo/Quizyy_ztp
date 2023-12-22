@@ -12,6 +12,16 @@
         <ContentControl x:Name="contentControl"/>
         
     </Grid>
-    
+    <UserControl.Resources>
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF4081"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FF4081"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+    </UserControl.Resources>
 </UserControl>
     

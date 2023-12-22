@@ -57,7 +57,8 @@ namespace Quizyy_wpf.View
                 Content = "Poprzednie",
                 Margin = new Thickness(100),
                 Width = 140,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             previousButton.Click += PreviousButtonClick;
 
@@ -66,7 +67,8 @@ namespace Quizyy_wpf.View
                 Content = "Następne",
                 Margin = new Thickness(100),
                 Width = 140,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             nextButton.Click += NextButtonClick;
             contextButton = new Button
@@ -74,7 +76,8 @@ namespace Quizyy_wpf.View
                 Content = "Sprawdź poprawność odpowiedzi",
                 Margin = new Thickness(0, 150, 0, 0),
                 Width = 250,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
             };
             contextButton.Click += ContextButtonClick;
 
