@@ -41,19 +41,21 @@ namespace Quizyy_wpf
 
 			for (int i = 0; i < buttonLabels.Length; i++)
 			{
-				Button button = new Button
-				{
-					Content = buttonLabels[i],
-					Margin = new Thickness(10),
-					Width = 180,
-					Height = 30,
-                    Style = (Style)FindResource("CustomButtonStyle")
+                Button button = new Button
+                {
+                    Content = buttonLabels[i],
+                    Margin = new Thickness(10),
+                    Width = 180,
+                    Height = 30,                  
+                    Style = (Style)FindResource("CustomButtonStyle"),
+                    
+                    
+                    
                 };
-
-				switch (i)
+                switch (i)
 				{
 					case 0:                    
-                        button.Click += FlashCards;				
+                        button.Click += FlashCards;	
                         break;
 					case 1:
 						button.Click += Fit;                     
@@ -97,7 +99,7 @@ namespace Quizyy_wpf
             MainGrid.Children.Clear();
             contentControl.Content = new WriteView(this);
         }
-
+        
 
     }
 }
