@@ -99,7 +99,23 @@ namespace Quizyy_wpf
             MainGrid.Children.Clear();
             contentControl.Content = new WriteView(this);
         }
-        
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+            if (e.Key == Key.Q)
+            {
+                MainGrid.Children.Clear();
+                contentControl.Content = new EasterEggView(this);
+            }
+            else if (e.Key == Key.Escape)
+            {
+                contentControl.Content = null;
+                MainGrid.Children.Clear();
+                GenerateButtons();
+            }
+            
+        }
+
 
     }
 }

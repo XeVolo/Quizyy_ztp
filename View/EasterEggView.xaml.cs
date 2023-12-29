@@ -20,9 +20,16 @@ namespace Quizyy_wpf.View
     /// </summary>
     public partial class EasterEggView : UserControl
     {
-        public EasterEggView()
+        private MainWindow mainWindow;
+        public EasterEggView(MainWindow mainView)
         {
             InitializeComponent();
+            mainWindow = mainView;
+            OpenMode();
+        }
+        private void OpenMode()
+        {
+            mainWindow.backButton.Visibility = Visibility.Visible;
         }
     }
 }
