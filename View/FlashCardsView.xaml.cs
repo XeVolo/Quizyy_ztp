@@ -92,7 +92,8 @@ namespace Quizyy_wpf.View
             {
                 Margin = new Thickness(0, 10, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
             };
 
             Grid.SetRow(stackPanel, 0);

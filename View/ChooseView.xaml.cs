@@ -112,9 +112,10 @@ namespace Quizyy_wpf.View
             DisplayTextBlock = new TextBlock
             {
 
-                Margin = new Thickness(0, 10, 0, 10),
+                Margin = new Thickness(0, 10, 0, 100),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
             };
             MainGrid.Children.Add(DisplayTextBlock);
             DisplayQuestion();

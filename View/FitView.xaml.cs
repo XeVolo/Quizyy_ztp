@@ -128,21 +128,24 @@ namespace Quizyy_wpf.View
             MainGrid.Children.Add(stackPanel2);
             DisplayTextBlock1 = new TextBlock
             {
-                Margin = new Thickness(10, 300, 300, 5),
+                Margin = new Thickness(10, 400, 300, 5),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
             };
             DisplayTextBlock2 = new TextBlock
             {
-                Margin = new Thickness(300, 300, 0, 5),
+                Margin = new Thickness(300, 400, 0, 5),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
             };
             DisplayTextBlock3 = new TextBlock
             {
-                Margin = new Thickness(0, 350, 0, 0),
+                Margin = new Thickness(0, 450, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
             };
             MainGrid.Children.Add(DisplayTextBlock1);
             MainGrid.Children.Add(DisplayTextBlock2);

@@ -92,7 +92,8 @@ namespace Quizyy_wpf.View
 
                 Margin = new Thickness(0, 10, 0, 100),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 30
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
             };
             TextBox = new TextBox
             {
