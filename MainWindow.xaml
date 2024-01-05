@@ -17,12 +17,12 @@
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Polygon Points="0,0 73,70 0,70" />
-                        <Image Source="C:\Users\xevol\OneDrive\Pulpit\kck\Quizyy wpf\st1.png"/>
+                        <Image Source="E:\Studia\kck\Quizyy wpf\st1.png"/>
                     </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Image Source="C:\Users\xevol\OneDrive\Pulpit\kck\Quizyy wpf\logo.png" HorizontalAlignment="Center" Height="92" Width="600" Margin="0,20,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+        <Image Source="E:\Studia\kck\Quizyy wpf\logo.png" HorizontalAlignment="Center" Height="92" Width="600" Margin="0,20,0,0" VerticalAlignment="Top" Visibility="Visible"/>
         <ContentControl x:Name="contentControl"/>
 
     </Grid>

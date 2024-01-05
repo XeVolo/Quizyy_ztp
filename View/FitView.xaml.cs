@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -160,14 +161,16 @@ namespace Quizyy_wpf.View
                 conceptid = Convert.ToInt32(clickedButton.Tag);
                 DisplayTextBlock1.Text = "Wybrano: " + concept;
                 chosen1 = clickedButton;
-            }
+
+			}
             if (concept != null && definition != null)
             {
                 CheckCorrectness();
             }
+            
+			
 
-
-        }
+		}
         private void RightButtonClick(object sender, RoutedEventArgs e)
         {
 
@@ -188,9 +191,24 @@ namespace Quizyy_wpf.View
             if (conceptid == definitionid)
             {
                 DisplayTextBlock3.Text = "Połączenie poprawne";
-                chosen1.Visibility = Visibility.Collapsed;
-                chosen2.Visibility = Visibility.Collapsed;
-                resoult++;
+                
+				DoubleAnimation animation = new DoubleAnimation();
+				animation.From = 1.0;
+				animation.To = 0.0;
+				animation.Duration = new Duration(TimeSpan.FromSeconds(1)); 
+
+				Storyboard.SetTarget(animation, chosen1);			
+				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+				Storyboard storyboard = new Storyboard();
+				storyboard.Children.Add(animation);
+				storyboard.Begin();
+
+				Storyboard.SetTarget(animation, chosen2);
+				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+				Storyboard storyboard2 = new Storyboard();
+				storyboard2.Children.Add(animation);
+				storyboard2.Begin();
+				resoult++;
             }
             else
             {
@@ -206,7 +224,8 @@ namespace Quizyy_wpf.View
             chosen2 = null;
             if (resoult == 7)
             {
-                resoult = 0;
+				DisplayTextBlock3.Text = "";
+				resoult = 0;
                 OpenMode();
             }
 
