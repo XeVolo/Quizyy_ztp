@@ -35,17 +35,24 @@ namespace Quizyy_wpf.View
         private Button? chosen1;
         private Button? chosen2;
         private int resoult = 0;
+        private static FitView instance; 
 
-        public FitView(MainWindow mainView)
+		public static FitView GetInstance(MainWindow mainView)
+		{
+			if (instance == null)
+			{
+				instance = new FitView(mainView);
+			}
+			return instance;
+		}
+		private FitView(MainWindow mainView)
         {
             mainWindow1 = mainView;
             InitializeComponent();
             OpenMode();
         }
         public void OpenMode()
-        {
-            mainWindow1.backButton.Visibility = Visibility.Visible;
-            
+        {          
             NewSet();
         }
         private int GetRandom()

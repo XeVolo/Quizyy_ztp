@@ -31,16 +31,24 @@ namespace Quizyy_wpf.View
         private TextBlock? DisplayTextBlock;
         private List<WriteModel> items = BaseController.GetWriteList();
         private int index = 0;
-
-        public ChooseView(MainWindow mainView)
+        private static ChooseView instance;
+        public static ChooseView GetInstance(MainWindow mainView)
+        {
+			if (instance == null)
+			{
+				instance = new ChooseView(mainView);
+			}
+			return instance;
+		}
+        private ChooseView(MainWindow mainView)
         {
             InitializeComponent();
             mainWindow = mainView;
             OpenMode();
-        }
+
+		}
         public void OpenMode()
-        {
-            mainWindow.backButton.Visibility = Visibility.Visible;
+        {          
             NewSet();
         }
         private void NewSet()
