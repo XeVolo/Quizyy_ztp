@@ -1,6 +1,7 @@
 ﻿
 using Quizyy_wpf.Model;
 using Quizyy_wpf.View;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
@@ -22,6 +23,7 @@ namespace Quizyy_wpf
 	{
 		public MainWindow()
 		{
+			//UpdateDatabase();
 			InitializeComponent();
 			GenerateButtons();
 		}
@@ -116,37 +118,39 @@ namespace Quizyy_wpf
         {
 			using (var context = new MyBaseContext())
 			{
-				/*
-				string path = "E:\\Studia\\kck\\danefiszki2.txt";
+				
+				string path = "E:\\Studia\\ztp\\Projekt\\Quizyy wpf\\danefiszki2.txt";
 				string[] lines = File.ReadAllLines(path);
 				foreach (var line in lines)
 				{
 					string[] elements = line.Split(';');
-					if (elements.Length == 3)
+					if (elements.Length == 4)
 					{
 
 						int id = Convert.ToInt32(elements[0]);
 						string concept = elements[1];
 						string definition = elements[2];
+						string difficultylvl = elements[3];
 
 						var neww = new FlashCardsModel
 						{
 							id = id,
 							concept = concept,
-							definition = definition
+							definition = definition,
+							difficultylvl = difficultylvl
 						};
 						context.FlashCards.Add(neww);
 					}
 				}
 				context.SaveChanges();
-				*/
+				
 				/*
-				string path = "E:\\Studia\\kck\\danepytanie2.txt";
-				string[] lines = File.ReadAllLines(path);
-				foreach (var line in lines)
+				string path2 = "E:\\Studia\\ztp\\Projekt\\Quizyy wpf\\danepytanie1.txt";
+				string[] lines2 = File.ReadAllLines(path2);
+				foreach (var line in lines2)
 				{
 					string[] elements = line.Split(';');
-					if (elements.Length == 6)
+					if (elements.Length == 7)
 					{
 
 						int id = Convert.ToInt32(elements[0]);
@@ -155,7 +159,7 @@ namespace Quizyy_wpf
 						string incorrectans1 = elements[3];
 						string incorrectans2 = elements[4];
 						string incorrectans3 = elements[5];
-
+						string difficultylvl = elements[6];
 
 						var neww = new WriteModel
 						{
@@ -164,7 +168,8 @@ namespace Quizyy_wpf
 							answer = answer,
 							incorrectans1=incorrectans1,
 							incorrectans2=incorrectans2,
-							incorrectans3=incorrectans3
+							incorrectans3=incorrectans3,
+							difficultylvl = difficultylvl
 						};
 						context.Writes.Add(neww);
 					}
