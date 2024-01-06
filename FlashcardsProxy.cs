@@ -7,12 +7,12 @@ namespace Quizyy_wpf
     {
         private readonly string _concept;
         private readonly string _definition;
-        private readonly string _level;
+        private readonly string _difficultylvl;
         public FlashCardsProxy(string concept, string definition, string level)
         {
             _concept = concept;
             _definition = definition;
-            _level = level;
+            _difficultylvl = level;
         }
 
         public string TakeConcept()
@@ -26,7 +26,7 @@ namespace Quizyy_wpf
         }
         public string TakeLevel()
         {
-            return _level;
+            return _difficultylvl;
         }
 
         public void Save()
@@ -43,7 +43,7 @@ namespace Quizyy_wpf
                         id = lastId + 1,
                         concept = _concept,
                         definition = _definition,
-                        level = _level
+                        difficultylvl = _difficultylvl
                     };
                     context.FlashCards.Add(newFlashcard);
                     context.SaveChanges();

@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Quizyy_wpf
 {
-    public interface IQuestionProxy : ISaveProxy
+    public interface IQuestionProxy 
     {
-        string SaveQuestion();
-        string SaveCorrectAnswer();
-        string SaveUncorrectAnswer1();
-        string SaveUncorrectAnswer2();
-        string SaveUncorrectAnswer3();
-        string SaveLevel();
+        string TakeQuestion();
+        string TakeCorrectAnswer();
+        string TakeIncorrectAnswer1();
+        string TakeIncorrectAnswer2();
+        string TakeIncorrectAnswer3();
+        string TakeLevel();
+        void Save();
     }
 }

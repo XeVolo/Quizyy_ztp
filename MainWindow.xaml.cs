@@ -107,71 +107,47 @@ namespace Quizyy_wpf
         }
 
         private void UpdateDatabase()
-        {
-			using (var context = new MyBaseContext())
-			{
-				
+        {				
 				string path = "E:\\Studia\\ztp\\Projekt\\Quizyy wpf\\danefiszki2.txt";
 				string[] lines = File.ReadAllLines(path);
 				foreach (var line in lines)
 				{
 					string[] elements = line.Split(';');
-					if (elements.Length == 4)
+					if (elements.Length == 3)
 					{
+				
+						string concept = elements[0];
+						string definition = elements[1];
+						string difficultylvl = elements[2];
 
-						int id = Convert.ToInt32(elements[0]);
-						string concept = elements[1];
-						string definition = elements[2];
-						string difficultylvl = elements[3];
-
-						var neww = new FlashCardsModel
-						{
-							id = id,
-							concept = concept,
-							definition = definition,
-							difficultylvl = difficultylvl
-						};
-						context.FlashCards.Add(neww);
+						FlashCardsProxy flashCardsSaving = new FlashCardsProxy(concept, definition, difficultylvl);
+                        flashCardsSaving.Save();
 					}
 				}
-				context.SaveChanges();
 				
-				/*
+				
+				
 				string path2 = "E:\\Studia\\ztp\\Projekt\\Quizyy wpf\\danepytanie1.txt";
 				string[] lines2 = File.ReadAllLines(path2);
 				foreach (var line in lines2)
 				{
 					string[] elements = line.Split(';');
-					if (elements.Length == 7)
-					{
+					if (elements.Length == 6)
+					{						
+						string question = elements[0];
+						string answer = elements[1];
+						string incorrectans1 = elements[2];
+						string incorrectans2 = elements[3];
+						string incorrectans3 = elements[4];
+						string difficultylvl = elements[5];
 
-						int id = Convert.ToInt32(elements[0]);
-						string question = elements[1];
-						string answer = elements[2];
-						string incorrectans1 = elements[3];
-						string incorrectans2 = elements[4];
-						string incorrectans3 = elements[5];
-						string difficultylvl = elements[6];
-
-						var neww = new WriteModel
-						{
-							id = id,
-							question = question,
-							answer = answer,
-							incorrectans1=incorrectans1,
-							incorrectans2=incorrectans2,
-							incorrectans3=incorrectans3,
-							difficultylvl = difficultylvl
-						};
-						context.Writes.Add(neww);
+                    QuestionProxy questionSaving = new QuestionProxy(question, answer, incorrectans1, incorrectans2, incorrectans3, difficultylvl);
+                    questionSaving.Save();
 					}
 				}
-				context.SaveChanges();
-				*/
-				context.Dispose();
+						
 			}
 		}
 
 
-}
 }
