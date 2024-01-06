@@ -25,12 +25,12 @@
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Polygon Points="0,0 73,70 0,70" />
-                        <Image Source="E:\Studia\kck\Quizyy wpf\st2.png"/>
+                        <Image Source="st2.png"/>
                     </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Image Source="E:\Studia\kck\Quizyy wpf\logo2.png" HorizontalAlignment="Center" Height="92" Width="600" Margin="0,20,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+        <Image Source="logo2.png" HorizontalAlignment="Center" Height="92" Width="600" Margin="0,20,0,0" VerticalAlignment="Top" Visibility="Visible"/>
         <ContentControl x:Name="contentControl"/>
 
     </Grid>
