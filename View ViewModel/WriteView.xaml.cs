@@ -12,35 +12,33 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Quizyy_wpf.Controller;
 using Quizyy_wpf.Model;
 
 namespace Quizyy_wpf.View
 {
     /// <summary>
-    /// Logika interakcji dla klasy FlashCardsView.xaml
+    /// Logika interakcji dla klasy WriteView.xaml
     /// </summary>
-    public partial class FlashCardsView : UserControl
+    public partial class WriteView : UserControl
     {
-        private MainWindow mainWindow;
+        private MainWindow mainWindow1;
         private StackPanel? stackPanel;
         private Button? previousButton;
         private Button? nextButton;
         private Button? contextButton;
         private TextBlock? DisplayTextBlock;
-        List<FlashCardsModel> items = BaseController.GetFlashCardsList();
-        private int currentIndex = 1;
-        private int control = 0;
-        public FlashCardsView(MainWindow mainView)
+        private TextBox? TextBox;
+        private List<WriteModel> items = BaseController.GetWriteList();
+        private int index = 0;
+        public WriteView(MainWindow mainView)
         {
-            mainWindow = mainView;
+            mainWindow1 = mainView;
             InitializeComponent();
-
             OpenMode();
         }
         public void OpenMode()
         {
-            mainWindow.backButton.Visibility = Visibility.Visible;     
+            mainWindow1.backButton.Visibility = Visibility.Visible;
             CreateUI();
         }
         private void CreateUI()
@@ -55,7 +53,7 @@ namespace Quizyy_wpf.View
 
             previousButton = new Button
             {
-                Content = "Poprzedni",
+                Content = "Poprzednie",
                 Margin = new Thickness(100),
                 Width = 180,
                 Height = 30,
@@ -65,7 +63,7 @@ namespace Quizyy_wpf.View
 
             nextButton = new Button
             {
-                Content = "Następny",
+                Content = "Następne",
                 Margin = new Thickness(100),
                 Width = 180,
                 Height = 30,
@@ -74,9 +72,9 @@ namespace Quizyy_wpf.View
             nextButton.Click += NextButtonClick;
             contextButton = new Button
             {
-                Content = "Tłumaczenie",
+                Content = "Sprawdź poprawność odpowiedzi",
                 Margin = new Thickness(0, 150, 0, 0),
-                Width = 180,
+                Width = 250,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
@@ -90,68 +88,77 @@ namespace Quizyy_wpf.View
 
             DisplayTextBlock = new TextBlock
             {
-                Margin = new Thickness(0, 10, 0, 0),
+
+                Margin = new Thickness(0, 10, 0, 100),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Height = 30,
                 Style = (Style)FindResource("CustomTextStyle")
+            };
+            TextBox = new TextBox
+            {
+                Margin = new Thickness(0, 10, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 30,
+                Width = 200
             };
 
             Grid.SetRow(stackPanel, 0);
             Grid.SetRow(DisplayTextBlock, 1);
 
-            mainWindow.MainGrid.Children.Add(stackPanel);
-            mainWindow.MainGrid.Children.Add(DisplayTextBlock);
-            DisplayCurrentItem();
+            MainGrid.Children.Add(stackPanel);
+            MainGrid.Children.Add(DisplayTextBlock);
+            MainGrid.Children.Add(TextBox);
+            DisplayQuestion();
         }
-
         private void PreviousButtonClick(object sender, RoutedEventArgs e)
         {
-            if (currentIndex > 0)
+            if (index > 0)
             {
-                currentIndex--;
-                DisplayCurrentItem();
+                index--;
+                DisplayQuestion();
             }
-            else if (currentIndex == 0)
+            else if (index == 0)
             {
-                currentIndex = items.Count - 1;
-                DisplayCurrentItem();
+                index = items.Count - 1;
+                DisplayQuestion();
             }
         }
 
         private void NextButtonClick(object sender, RoutedEventArgs e)
         {
-            if (currentIndex < items.Count - 1)
+            if (index < items.Count - 1)
             {
-                currentIndex++;
-                DisplayCurrentItem();
-            }else if (currentIndex == items.Count - 1)
+                index++;
+                DisplayQuestion();
+            }
+            else if (index >= items.Count - 1)
             {
-                currentIndex=0;
+                index = 0;
+                DisplayQuestion();
             }
         }
         private void ContextButtonClick(object sender, RoutedEventArgs e)
         {
-            if (control == 1)
+            string ans = TextBox.Text.ToLower();
+            bool correctness = ans.Equals(items[index].answer.ToLower());
+            if (correctness)
             {
-                DisplayTextBlock.Text = items[currentIndex].definition;
-                control = 0;
+
+                MessageBox.Show("Odpowiedź prawidłowa");
+                index++;
+                if (index >= items.Count - 1) index = 0;
+                TextBox.Text = "";
+                DisplayQuestion();
             }
             else
             {
-                DisplayTextBlock.Text = items[currentIndex].concept;
-                control = 1;
+                TextBox.Text = "";
+                MessageBox.Show("Odpowiedź błędna");
             }
         }
-
-        private void DisplayCurrentItem()
+        private void DisplayQuestion()
         {
-            if (items.Count > 0 && currentIndex >= 0 && currentIndex < items.Count)
-            {
-                DisplayTextBlock.Text = items[currentIndex].concept;
-                control = 1;
-            }
+            DisplayTextBlock.Text = items[index].question;
         }
-        
     }
 }
-

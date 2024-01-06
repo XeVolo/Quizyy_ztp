@@ -13,7 +13,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Quizyy_wpf.Controller;
 using Quizyy_wpf.Model;
 
 namespace Quizyy_wpf.View
@@ -36,6 +35,7 @@ namespace Quizyy_wpf.View
         private Button? chosen1;
         private Button? chosen2;
         private int resoult = 0;
+
         public FitView(MainWindow mainView)
         {
             mainWindow1 = mainView;

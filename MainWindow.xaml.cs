@@ -1,4 +1,4 @@
-﻿using Quizyy_wpf.Controller;
+﻿
 using Quizyy_wpf.View;
 using System.Reflection;
 using System.Text;
@@ -102,12 +102,7 @@ namespace Quizyy_wpf
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             
-            if (e.Key == Key.Q)
-            {
-                MainGrid.Children.Clear();
-                contentControl.Content = new EasterEggView(this);
-            }
-            else if (e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 contentControl.Content = null;
                 MainGrid.Children.Clear();

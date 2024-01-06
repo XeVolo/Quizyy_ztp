@@ -1,4 +1,4 @@
-﻿using Quizyy_wpf.Controller;
+﻿
 using System.Configuration;
 using System.Data;
 using System.Windows;

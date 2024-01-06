@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Quizyy_wpf.Controller;
 using Quizyy_wpf.Model;
 
 namespace Quizyy_wpf.View
