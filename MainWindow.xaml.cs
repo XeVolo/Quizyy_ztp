@@ -13,13 +13,14 @@ namespace Quizyy_wpf
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		
 		public MainWindow()
 		{
 			//UpdateDatabase();
 			InitializeComponent();
 			GenerateButtons();
 		}
-        
+		
 
         public void GenerateButtons()
         {
@@ -74,26 +75,31 @@ namespace Quizyy_wpf
             GenerateButtons();
 
         }
-        private void FlashCards(object sender, RoutedEventArgs e)
+		
+		private void FlashCards(object sender, RoutedEventArgs e)
         {
             MainGrid.Children.Clear();
-            contentControl.Content = new FlashCardsView(this);
-        }
+            contentControl.Content = FlashCardsView.GetInstance(this);
+			backButton.Visibility = Visibility.Visible;
+		}
         private void Choose(object sender, RoutedEventArgs e)
         {
             MainGrid.Children.Clear();
-            contentControl.Content = new ChooseView(this);
-        }
+			contentControl.Content = ChooseView.GetInstance(this);
+			backButton.Visibility = Visibility.Visible;
+		}
         private void Fit(object sender, RoutedEventArgs e)
         {
             MainGrid.Children.Clear();
-            contentControl.Content = new FitView(this);
-        }
+            contentControl.Content = FitView.GetInstance(this);
+			backButton.Visibility = Visibility.Visible;
+		}
         private void Write(object sender, RoutedEventArgs e)
         {
             MainGrid.Children.Clear();
-            contentControl.Content = new WriteView(this);
-        }
+            contentControl.Content = WriteView.GetInstance(this);
+			backButton.Visibility = Visibility.Visible;
+		}
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
 

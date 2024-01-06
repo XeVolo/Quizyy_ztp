@@ -30,16 +30,25 @@ namespace Quizyy_wpf.View
         List<FlashCardsModel> items = BaseController.GetFlashCardsList();
         private int currentIndex = 1;
         private int control = 0;
-        public FlashCardsView(MainWindow mainView)
+        private static FlashCardsView instance;
+
+		public static FlashCardsView GetInstance(MainWindow mainView)
+		{
+			if (instance == null)
+			{
+				instance = new FlashCardsView(mainView);
+			}
+			return instance;
+		}
+
+		private FlashCardsView(MainWindow mainView)
         {
             mainWindow = mainView;
             InitializeComponent();
-
             OpenMode();
         }
         public void OpenMode()
-        {
-            mainWindow.backButton.Visibility = Visibility.Visible;     
+        {              
             CreateUI();
         }
         private void CreateUI()
@@ -95,11 +104,8 @@ namespace Quizyy_wpf.View
                 Style = (Style)FindResource("CustomTextStyle")
             };
 
-            Grid.SetRow(stackPanel, 0);
-            Grid.SetRow(DisplayTextBlock, 1);
-
-            mainWindow.MainGrid.Children.Add(stackPanel);
-            mainWindow.MainGrid.Children.Add(DisplayTextBlock);
+            MainGrid.Children.Add(stackPanel);
+            MainGrid.Children.Add(DisplayTextBlock);
             DisplayCurrentItem();
         }
 

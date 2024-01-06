@@ -30,7 +30,17 @@ namespace Quizyy_wpf.View
         private TextBox? TextBox;
         private List<WriteModel> items = BaseController.GetWriteList();
         private int index = 0;
-        public WriteView(MainWindow mainView)
+        private static WriteView instance;
+
+		public static WriteView GetInstance(MainWindow mainView)
+		{
+			if (instance == null)
+			{
+				instance = new WriteView(mainView);
+			}
+			return instance;
+		}
+		private WriteView(MainWindow mainView)
         {
             mainWindow1 = mainView;
             InitializeComponent();
@@ -38,7 +48,7 @@ namespace Quizyy_wpf.View
         }
         public void OpenMode()
         {
-            mainWindow1.backButton.Visibility = Visibility.Visible;
+
             CreateUI();
         }
         private void CreateUI()
