@@ -22,5 +22,6 @@ namespace Quizyy_wpf.Model
 		public string incorrectans2 { get; set; }
 		[StringLength(100)]
 		public string incorrectans3 { get; set; }
+		public string difficultylvl { get; set; }
 	}
 }

@@ -16,5 +16,6 @@ namespace Quizyy_wpf.Model
 		[Required]
 		[StringLength(40)]
 		public string definition { get; set; }
+		public string difficultylvl { get; set; }
 	}
 }
