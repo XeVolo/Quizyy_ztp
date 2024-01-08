@@ -222,6 +222,7 @@ namespace Quizyy_wpf.View
             {
                 undoButton.IsEnabled = false;
             }
+            resoult--;
             var1.undo();
             redoHistory.Push(var1);
             redoButton.IsEnabled= true;
@@ -233,6 +234,7 @@ namespace Quizyy_wpf.View
 			{
 				redoButton.IsEnabled = false;
 			}
+            resoult++;
 			var1.redo();
 			undoHistory.Push(var1);
 			undoButton.IsEnabled = true;
