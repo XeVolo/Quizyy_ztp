@@ -13,7 +13,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Quizyy_wpf.Command;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.State;
 
 namespace Quizyy_wpf.View
 {
@@ -25,21 +27,25 @@ namespace Quizyy_wpf.View
         private MainWindow mainWindow1;
         private StackPanel? stackPanel1;
         private StackPanel? stackPanel2;
-        private TextBlock? DisplayTextBlock1;
-        private TextBlock? DisplayTextBlock2;
-        private TextBlock? DisplayTextBlock3;
-        private string? concept;
-        private string? definition;
-        private int? conceptid;
-        private int? definitionid;
-        private Button? chosen1;
-        private Button? chosen2;
-        private Button? undoButton;
-        private Button? redoButton;
-        private int resoult = 0;
+		public TextBlock? DisplayTextBlock1;
+		public TextBlock? DisplayTextBlock2;
+		public TextBlock? DisplayTextBlock3;     
+        public Button? undoButton;
+        public Button? redoButton;
         private static FitView instance;
-        private ConnectionHistory undoHistory = new ConnectionHistory();
-        private ConnectionHistory redoHistory = new ConnectionHistory();
+
+		public string? concept;
+		public string? definition;
+		public int? conceptid;
+		public int? definitionid;
+		public Button? chosen1;
+		public Button? chosen2;
+		public int resoult = 0;
+		public ConnectionHistory undoHistory = new ConnectionHistory();
+		public ConnectionHistory redoHistory = new ConnectionHistory();
+
+		private State1 state = null;
+
 
         public static FitView GetInstance(MainWindow mainView)
         {
@@ -51,6 +57,7 @@ namespace Quizyy_wpf.View
         }
         private FitView(MainWindow mainView)
         {
+            TransitionTo(new NoneChoosenState());
             mainWindow1 = mainView;
             InitializeComponent();
             OpenMode();
@@ -59,6 +66,7 @@ namespace Quizyy_wpf.View
         {
             NewSet();
         }
+        
         private int GetRandom()
         {
             List<FlashCardsModel> lista = BaseController.GetFlashCardsList();
@@ -115,7 +123,7 @@ namespace Quizyy_wpf.View
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
                 };
-                leftButtons.Click += LeftButtonClick;
+                leftButtons.Click += ChooseButtonClick;
 
                 stackPanel1.Children.Add(leftButtons);
             }
@@ -132,7 +140,7 @@ namespace Quizyy_wpf.View
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
                 };
-                rightButtons.Click += RightButtonClick;
+                rightButtons.Click += ChooseButtonClick;
 
                 stackPanel2.Children.Add(rightButtons);
             }
@@ -186,74 +194,27 @@ namespace Quizyy_wpf.View
             MainGrid.Children.Add(DisplayTextBlock2);
             MainGrid.Children.Add(DisplayTextBlock3);
         }
-        private void LeftButtonClick(object sender, RoutedEventArgs e)
+        public void TransitionTo(State1 state)
         {
+            this.state= state;
+            this.state.SetContext(this);
+            
+        }
 
+        private void ChooseButtonClick(object sender, RoutedEventArgs e)
+        {
             if (sender is Button clickedButton)
             {
-                concept = clickedButton.Content.ToString();
-                conceptid = Convert.ToInt32(clickedButton.Tag);
-                DisplayTextBlock1.Text = "Wybrano: " + concept;
-                chosen1 = clickedButton;
+                state.ChooseOption(clickedButton);
+                state.ShowResult();
 
-            }
-            if (concept != null && definition != null)
-            {
-                CheckCorrectness();
-            }
-
-
-
-        }
-        private void RightButtonClick(object sender, RoutedEventArgs e)
-        {
-
-            if (sender is Button clickedButton)
-            {
-                definition = clickedButton.Content.ToString();
-                definitionid = Convert.ToInt32(clickedButton.Tag);
-                DisplayTextBlock2.Text = "Wybrano: " + definition;
-                chosen2 = clickedButton;
-            }
-            if (concept != null && definition != null)
-            {
-                CheckCorrectness();
-            }
-        }
-        private void CheckCorrectness()
-        {
-            if (conceptid == definitionid)
-            {
-                DisplayTextBlock3.Text = "Połączenie poprawne";
-				chosen1.Visibility = Visibility.Collapsed;
-				chosen2.Visibility = Visibility.Collapsed;
-				resoult++;
-                FitConnectionCommand connection = new FitConnectionCommand(this, chosen1, chosen2);
-                undoButton.IsEnabled = true;
-                redoButton.IsEnabled = false;
-                undoHistory.Push(connection);
-                redoHistory.Clear();		
+                if (state.GetType() == typeof(SecondChoosenState))
+                {
+					state.ShowResult();
+				}
 			}
-            else
-            {
-                DisplayTextBlock3.Text = "Połączenie błędne";
-            }
-            DisplayTextBlock1.Text = "";
-            DisplayTextBlock2.Text = "";
-            concept = null;
-            definition = null;
-            conceptid = null;
-            definitionid = null;
-            chosen1 = null;
-            chosen2 = null;
-            if (resoult == 7)
-            {
-                DisplayTextBlock3.Text = "";
-                resoult = 0;
-                OpenMode();
-            }
-
         }
+        
         private void UndoButtonClick(object sender, RoutedEventArgs e)
         {
             FitCommand var1 = undoHistory.Pop();
