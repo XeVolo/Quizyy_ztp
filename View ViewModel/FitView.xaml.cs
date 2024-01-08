@@ -34,25 +34,29 @@ namespace Quizyy_wpf.View
         private int? definitionid;
         private Button? chosen1;
         private Button? chosen2;
+        private Button? undoButton;
+        private Button? redoButton;
         private int resoult = 0;
-        private static FitView instance; 
+        private static FitView instance;
+        private ConnectionHistory undoHistory = new ConnectionHistory();
+        private ConnectionHistory redoHistory = new ConnectionHistory();
 
-		public static FitView GetInstance(MainWindow mainView)
-		{
-			if (instance == null)
-			{
-				instance = new FitView(mainView);
-			}
-			return instance;
-		}
-		private FitView(MainWindow mainView)
+        public static FitView GetInstance(MainWindow mainView)
+        {
+            if (instance == null)
+            {
+                instance = new FitView(mainView);
+            }
+            return instance;
+        }
+        private FitView(MainWindow mainView)
         {
             mainWindow1 = mainView;
             InitializeComponent();
             OpenMode();
         }
         public void OpenMode()
-        {          
+        {
             NewSet();
         }
         private int GetRandom()
@@ -155,7 +159,30 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Style = (Style)FindResource("CustomTextStyle")
             };
-            MainGrid.Children.Add(DisplayTextBlock1);
+		    undoButton = new Button
+			{
+				Content = "Cofnij",
+				Margin = new Thickness(0, 0, 800, 200),
+				Width = 100,
+				Height = 30,
+				Style = (Style)FindResource("CustomButtonStyle"),
+                IsEnabled= false
+			};
+			undoButton.Click += UndoButtonClick;
+			redoButton = new Button
+			{
+				Content = "Przywróć",
+				Margin = new Thickness(800, 5, 0, 200),
+				Width = 100,
+				Height = 30,
+				Style = (Style)FindResource("CustomButtonStyle"),
+				IsEnabled = false
+			};
+			redoButton.Click += RedoButtonClick;
+
+            MainGrid.Children.Add(undoButton);
+            MainGrid.Children.Add(redoButton);
+			MainGrid.Children.Add(DisplayTextBlock1);
             MainGrid.Children.Add(DisplayTextBlock2);
             MainGrid.Children.Add(DisplayTextBlock3);
         }
@@ -169,15 +196,15 @@ namespace Quizyy_wpf.View
                 DisplayTextBlock1.Text = "Wybrano: " + concept;
                 chosen1 = clickedButton;
 
-			}
+            }
             if (concept != null && definition != null)
             {
                 CheckCorrectness();
             }
-            
-			
 
-		}
+
+
+        }
         private void RightButtonClick(object sender, RoutedEventArgs e)
         {
 
@@ -198,25 +225,15 @@ namespace Quizyy_wpf.View
             if (conceptid == definitionid)
             {
                 DisplayTextBlock3.Text = "Połączenie poprawne";
-                
-				DoubleAnimation animation = new DoubleAnimation();
-				animation.From = 1.0;
-				animation.To = 0.0;
-				animation.Duration = new Duration(TimeSpan.FromSeconds(1)); 
-
-				Storyboard.SetTarget(animation, chosen1);			
-				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
-				Storyboard storyboard = new Storyboard();
-				storyboard.Children.Add(animation);
-				storyboard.Begin();
-
-				Storyboard.SetTarget(animation, chosen2);
-				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
-				Storyboard storyboard2 = new Storyboard();
-				storyboard2.Children.Add(animation);
-				storyboard2.Begin();
+				chosen1.Visibility = Visibility.Collapsed;
+				chosen2.Visibility = Visibility.Collapsed;
 				resoult++;
-            }
+                FitConnectionCommand connection = new FitConnectionCommand(this, chosen1, chosen2);
+                undoButton.IsEnabled = true;
+                redoButton.IsEnabled = false;
+                undoHistory.Push(connection);
+                redoHistory.Clear();		
+			}
             else
             {
                 DisplayTextBlock3.Text = "Połączenie błędne";
@@ -231,11 +248,33 @@ namespace Quizyy_wpf.View
             chosen2 = null;
             if (resoult == 7)
             {
-				DisplayTextBlock3.Text = "";
-				resoult = 0;
+                DisplayTextBlock3.Text = "";
+                resoult = 0;
                 OpenMode();
             }
 
         }
-    }
+        private void UndoButtonClick(object sender, RoutedEventArgs e)
+        {
+            FitCommand var1 = undoHistory.Pop();
+            if (undoHistory.IsEmpty())
+            {
+                undoButton.IsEnabled = false;
+            }
+            var1.undo();
+            redoHistory.Push(var1);
+            redoButton.IsEnabled= true;
+        }
+		private void RedoButtonClick(object sender, RoutedEventArgs e)
+		{
+			FitCommand var1 = redoHistory.Pop();
+			if (redoHistory.IsEmpty())
+			{
+				redoButton.IsEnabled = false;
+			}
+			var1.redo();
+			undoHistory.Push(var1);
+			undoButton.IsEnabled = true;
+		}
+	}
 }
