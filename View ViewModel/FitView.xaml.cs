@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quizyy_wpf.Command;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.Proxy;
 using Quizyy_wpf.State;
 
 namespace Quizyy_wpf.View
@@ -47,7 +48,10 @@ namespace Quizyy_wpf.View
 		private State1 state = null;
 
 
-        public static FitView GetInstance(MainWindow mainView)
+        private List<FlashCardsModel> items = new List<FlashCardsModel>();
+
+
+		public static FitView GetInstance(MainWindow mainView)
         {
             if (instance == null)
             {
@@ -59,7 +63,9 @@ namespace Quizyy_wpf.View
         {
             TransitionTo(new NoneChoosenState());
             mainWindow1 = mainView;
-            InitializeComponent();
+			DatabaseProxy proxy2 = mainWindow1.GetProxy();
+			items = proxy2.GetFlashCardsList();
+			InitializeComponent();
             OpenMode();
         }
         public void OpenMode()
@@ -69,7 +75,7 @@ namespace Quizyy_wpf.View
         
         private int GetRandom()
         {
-            List<FlashCardsModel> lista = BaseController.GetFlashCardsList();
+            List<FlashCardsModel> lista = items;
             int size = lista.Count - 7;
             Random rnd = new Random();
             int result = rnd.Next(size);
@@ -94,7 +100,7 @@ namespace Quizyy_wpf.View
         }
         private void NewSet()
         {
-            List<FlashCardsModel> list = BaseController.GetFlashCardsList();
+            List<FlashCardsModel> list = items;
             int first = GetRandom();
             Range xy = new Range(first, first + 6);
             List<int> drawn = GetNumbers(xy);

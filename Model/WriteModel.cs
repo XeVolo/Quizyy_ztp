@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Quizyy_wpf.Model
 {
-    class WriteModel
+    public class WriteModel
     {
 		public int id { get; set; }
 		[Required]

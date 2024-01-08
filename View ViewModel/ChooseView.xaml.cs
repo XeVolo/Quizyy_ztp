@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.Proxy;
 
 namespace Quizyy_wpf.View
 {
@@ -29,10 +30,13 @@ namespace Quizyy_wpf.View
         private Button? ansButton3;
         private Button? ansButton4;
         private TextBlock? DisplayTextBlock;
-        private List<WriteModel> items = BaseController.GetWriteList();
-        private int index = 0;
+		//private static RealConnection realconnection = new RealConnection();
+		//private static DatabaseProxy proxy = new DatabaseProxy(realconnection);
+		private List<WriteModel> items = new List<WriteModel>();
+		private int index = 0;
         private static ChooseView instance;
-        public static ChooseView GetInstance(MainWindow mainView)
+
+		public static ChooseView GetInstance(MainWindow mainView)
         {
 			if (instance == null)
 			{
@@ -44,8 +48,11 @@ namespace Quizyy_wpf.View
         {
             InitializeComponent();
             mainWindow = mainView;
-            OpenMode();
+            DatabaseProxy proxy2 = mainWindow.GetProxy();
+            items = proxy2.GetWriteList();
 
+			OpenMode();
+			
 		}
         public void OpenMode()
         {          
@@ -147,7 +154,7 @@ namespace Quizyy_wpf.View
         }
         private int GetRandom()
         {
-            List<WriteModel> list = BaseController.GetWriteList();
+            List<WriteModel> list = items;
             int size = list.Count;
             Random rnd = new Random();
             int result = rnd.Next(size);

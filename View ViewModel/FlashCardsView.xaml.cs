@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.Proxy;
 
 namespace Quizyy_wpf.View
 {
@@ -27,8 +28,8 @@ namespace Quizyy_wpf.View
         private Button? nextButton;
         private Button? contextButton;
         private TextBlock? DisplayTextBlock;
-        List<FlashCardsModel> items = BaseController.GetFlashCardsList();
-        private int currentIndex = 1;
+		private List<FlashCardsModel> items = new List<FlashCardsModel>();
+		private int currentIndex = 1;
         private int control = 0;
         private static FlashCardsView instance;
 
@@ -44,7 +45,9 @@ namespace Quizyy_wpf.View
 		private FlashCardsView(MainWindow mainView)
         {
             mainWindow = mainView;
-            InitializeComponent();
+			DatabaseProxy proxy2 = mainWindow.GetProxy();
+			items = proxy2.GetFlashCardsList();
+			InitializeComponent();
             OpenMode();
         }
         public void OpenMode()
