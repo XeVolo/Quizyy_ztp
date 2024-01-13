@@ -23,16 +23,22 @@ namespace Quizyy_wpf.View
     {
         private MainWindow mainWindow;
         private StackPanel? stackPanel;
+        private StackPanel? stackPanel2;
         private Button? previousButton;
         private Button? nextButton;
         private Button? contextButton;
+        private Button? chooseRandomButton;
         private TextBlock? DisplayTextBlock;
         List<FlashCardsModel> items = BaseController.GetFlashCardsList();
         private int currentIndex = 1;
         private int control = 0;
         private static FlashCardsView instance;
+        private int choose = 0;
 
-		public static FlashCardsView GetInstance(MainWindow mainView)
+        private FlashCardsDefaultIterator defaultIterator;
+        private FlashCardsRandomIterator randomIterator;
+
+        public static FlashCardsView GetInstance(MainWindow mainView)
 		{
 			if (instance == null)
 			{
@@ -41,19 +47,32 @@ namespace Quizyy_wpf.View
 			return instance;
 		}
 
-		private FlashCardsView(MainWindow mainView)
+        private FlashCardsView(MainWindow mainView)
         {
             mainWindow = mainView;
             InitializeComponent();
+            items = BaseController.GetFlashCardsList();
+            defaultIterator = new FlashCardsDefaultIterator(items);
+            randomIterator = new FlashCardsRandomIterator(items);
             OpenMode();
         }
+
         public void OpenMode()
-        {              
+        {
             CreateUI();
         }
+
         private void CreateUI()
         {
             stackPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            stackPanel2 = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -80,6 +99,7 @@ namespace Quizyy_wpf.View
                 Style = (Style)FindResource("CustomButtonStyle")
             };
             nextButton.Click += NextButtonClick;
+
             contextButton = new Button
             {
                 Content = "Tłumaczenie",
@@ -90,11 +110,20 @@ namespace Quizyy_wpf.View
             };
             contextButton.Click += ContextButtonClick;
 
+            chooseRandomButton = new Button
+            {
+                Content = "Losowo",
+                Margin = new Thickness(-100, 350, 0, 0),
+                Width = 180,
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
+            };
+            chooseRandomButton.Click += ChooseRandomButtonClick;
+
             stackPanel.Children.Add(previousButton);
-
             stackPanel.Children.Add(contextButton);
-
             stackPanel.Children.Add(nextButton);
+            stackPanel2.Children.Add(chooseRandomButton);
 
             DisplayTextBlock = new TextBlock
             {
@@ -106,34 +135,67 @@ namespace Quizyy_wpf.View
 
             MainGrid.Children.Add(stackPanel);
             MainGrid.Children.Add(DisplayTextBlock);
+            MainGrid.Children.Add(stackPanel2);
             DisplayCurrentItem();
         }
 
         private void PreviousButtonClick(object sender, RoutedEventArgs e)
         {
-            if (currentIndex > 0)
+            if (choose == 0)
             {
-                currentIndex--;
-                DisplayCurrentItem();
+                if (defaultIterator.MovePrevious())
+                {
+                    currentIndex = defaultIterator.GetCurrentIndex();
+                }
+                else
+                {
+                    currentIndex = items.Count - 1;
+                }
             }
-            else if (currentIndex == 0)
+            else if (choose == 1 && randomIterator.HasPrevious())
             {
-                currentIndex = items.Count - 1;
-                DisplayCurrentItem();
+                randomIterator.MovePrevious();
+                currentIndex = randomIterator.GetCurrentIndex();
             }
+            else
+            {
+                currentIndex = 0;
+            }
+
+            DisplayCurrentItem();
         }
 
         private void NextButtonClick(object sender, RoutedEventArgs e)
         {
-            if (currentIndex < items.Count - 1)
+            if (choose == 0)
             {
-                currentIndex++;
-                DisplayCurrentItem();
-            }else if (currentIndex == items.Count - 1)
-            {
-                currentIndex=0;
+                if (defaultIterator.MoveNext())
+                {
+                    currentIndex = defaultIterator.GetCurrentIndex();
+                }
+                else
+                {
+                    currentIndex = 0;
+                }
             }
+            else if (choose == 1 && randomIterator.HasNext())
+            {
+                randomIterator.MoveNext();
+                currentIndex = randomIterator.GetCurrentIndex();
+            }
+            else
+            {
+                currentIndex = 0;
+            }
+
+            DisplayCurrentItem();
         }
+
+        private void ChooseRandomButtonClick(object sender, RoutedEventArgs e)
+        {
+            choose = 1;
+        }
+
         private void ContextButtonClick(object sender, RoutedEventArgs e)
         {
             if (control == 1)
@@ -156,7 +218,5 @@ namespace Quizyy_wpf.View
                 control = 1;
             }
         }
-        
     }
 }
-

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Quizyy_wpf.Model
 {
-    class FlashCardsModel
+    public class FlashCardsModel
     {
 		public int id { get; set; }
 		[Required]
