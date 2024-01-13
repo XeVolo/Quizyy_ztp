@@ -16,7 +16,7 @@ namespace Quizyy_wpf
         bool MovePrevious();
     }
 
-    public class FlashCardsDefaultIterator : IEnumerator<FlashCardsModel>, IEnumerable<FlashCardsModel>
+    public class FlashCardsDefaultIterator
     {
         public List<FlashCardsModel> items;
         private int currentIndex;
@@ -31,8 +31,6 @@ namespace Quizyy_wpf
         {
             get { return items[currentIndex]; }
         }
-
-        object IEnumerator.Current => throw new NotImplementedException();
 
         public void Dispose()
         {
@@ -91,11 +89,6 @@ namespace Quizyy_wpf
         {
             throw new NotImplementedException();
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class FlashCardsRandomIterator : IIterator<FlashCardsModel>
@@ -151,4 +144,68 @@ namespace Quizyy_wpf
             return randomIndexes.Count > 0 ? randomIndexes[randomIndexes.Count - 1] : 0;
         }
     }
+
+    public class FlashCardsBy3Iterator : IIterator<FlashCardsModel>
+    {
+        public List<FlashCardsModel> items;
+        private int currentIndex;
+        private int counter;
+
+        public FlashCardsBy3Iterator(List<FlashCardsModel> items)
+        {
+            this.items = items;
+            this.currentIndex = 0;
+            this.counter = 1;
+        }
+
+        public bool MoveNext()
+        {
+            if (currentIndex < items.Count - 4)
+            {
+                currentIndex+=3;
+                return true;
+            }
+            else if (currentIndex >= items.Count - 4)
+            {
+                currentIndex = counter;
+                counter++;
+                return true;
+            }
+
+            return false;
+        }
+
+
+        public bool HasPrevious()
+        {
+            return currentIndex > 4;
+        }
+
+        public bool MovePrevious()
+        {
+            if (currentIndex > 4)
+            {
+                currentIndex-=3;
+                return true;
+            }
+            else if (currentIndex <= 3)
+            {
+                currentIndex = items.Count - 1;
+                return true;
+            }
+
+            return false;
+        }
+
+        public int GetCurrentIndex()
+        {
+            return currentIndex;
+        }
+
+        public FlashCardsModel Current
+        {
+            get { return items[currentIndex]; }
+        }
+    }
+
 }

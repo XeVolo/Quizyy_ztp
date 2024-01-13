@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +29,7 @@ namespace Quizyy_wpf.View
         private Button? nextButton;
         private Button? contextButton;
         private Button? chooseRandomButton;
+        private Button? chooseBy3Button;
         private TextBlock? DisplayTextBlock;
         List<FlashCardsModel> items = BaseController.GetFlashCardsList();
         private int currentIndex = 1;
@@ -37,6 +39,7 @@ namespace Quizyy_wpf.View
 
         private FlashCardsDefaultIterator defaultIterator;
         private FlashCardsRandomIterator randomIterator;
+        private FlashCardsBy3Iterator by3Iterator;
 
         public static FlashCardsView GetInstance(MainWindow mainView)
 		{
@@ -54,6 +57,7 @@ namespace Quizyy_wpf.View
             items = BaseController.GetFlashCardsList();
             defaultIterator = new FlashCardsDefaultIterator(items);
             randomIterator = new FlashCardsRandomIterator(items);
+            by3Iterator = new FlashCardsBy3Iterator(items);
             OpenMode();
         }
 
@@ -113,17 +117,28 @@ namespace Quizyy_wpf.View
             chooseRandomButton = new Button
             {
                 Content = "Losowo",
-                Margin = new Thickness(-100, 350, 0, 0),
+                Margin = new Thickness(-5, 350, 0, 0),
                 Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
             chooseRandomButton.Click += ChooseRandomButtonClick;
 
+            chooseBy3Button = new Button
+            {
+                Content = "Co trzecie",
+                Margin = new Thickness(5, 350, 0, 0),
+                Width = 180,
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
+            };
+            chooseBy3Button.Click += ChooseBy3ButtonClick;
+
             stackPanel.Children.Add(previousButton);
             stackPanel.Children.Add(contextButton);
             stackPanel.Children.Add(nextButton);
             stackPanel2.Children.Add(chooseRandomButton);
+            stackPanel2.Children.Add(chooseBy3Button);
 
             DisplayTextBlock = new TextBlock
             {
@@ -157,6 +172,11 @@ namespace Quizyy_wpf.View
                 randomIterator.MovePrevious();
                 currentIndex = randomIterator.GetCurrentIndex();
             }
+            else if(choose == 2)
+            {
+                by3Iterator.MovePrevious();
+                currentIndex= by3Iterator.GetCurrentIndex();
+            }
             else
             {
                 currentIndex = 0;
@@ -183,6 +203,11 @@ namespace Quizyy_wpf.View
                 randomIterator.MoveNext();
                 currentIndex = randomIterator.GetCurrentIndex();
             }
+            else if (choose == 2)
+            {
+                by3Iterator.MoveNext();
+                currentIndex = by3Iterator.GetCurrentIndex();
+            }
             else
             {
                 currentIndex = 0;
@@ -194,6 +219,11 @@ namespace Quizyy_wpf.View
         private void ChooseRandomButtonClick(object sender, RoutedEventArgs e)
         {
             choose = 1;
+        }
+
+        private void ChooseBy3ButtonClick(object sender, RoutedEventArgs e)
+        {
+            choose = 2;
         }
 
         private void ContextButtonClick(object sender, RoutedEventArgs e)
