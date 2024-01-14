@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.Observer;
 using Quizyy_wpf.Proxy;
 
 namespace Quizyy_wpf.View
@@ -28,12 +29,15 @@ namespace Quizyy_wpf.View
         private Button? nextButton;
         private Button? contextButton;
         private TextBlock? DisplayTextBlock;
+        private TextBlock? CurrentResult;
+        private TextBlock? Record;
         private TextBox? TextBox;
-		private List<WriteModel> items = new List<WriteModel>();
-		private int index = 0;
+        private List<WriteModel> items = new List<WriteModel>();
+        private int index = 0;
         private static WriteView instance;
+        public PointsManager pointsManager = new PointsManager();
 
-		public static WriteView GetInstance(MainWindow mainView)
+        public static WriteView GetInstance(MainWindow mainView)
 		{
 			if (instance == null)
 			{
@@ -107,9 +111,25 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Style = (Style)FindResource("CustomTextStyle")
             };
+            CurrentResult = new TextBlock
+            {
+
+                Margin = new Thickness(100, 380, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
+            };
+            Record = new TextBlock
+            {
+
+                Margin = new Thickness(-100, 380, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
+            };
             TextBox = new TextBox
             {
-                Margin = new Thickness(0, 10, 0, 0),
+                Margin = new Thickness(0, 20, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Height = 30,
                 Width = 200
@@ -117,9 +137,13 @@ namespace Quizyy_wpf.View
 
             Grid.SetRow(stackPanel, 0);
             Grid.SetRow(DisplayTextBlock, 1);
+            Grid.SetRow(CurrentResult, 2);
+            Grid.SetRow(Record, 3);
 
             MainGrid.Children.Add(stackPanel);
             MainGrid.Children.Add(DisplayTextBlock);
+            MainGrid.Children.Add(CurrentResult);
+            MainGrid.Children.Add(Record);
             MainGrid.Children.Add(TextBox);
             DisplayQuestion();
         }
@@ -150,21 +174,25 @@ namespace Quizyy_wpf.View
                 DisplayQuestion();
             }
         }
+
         private void ContextButtonClick(object sender, RoutedEventArgs e)
         {
             string ans = TextBox.Text.ToLower();
             bool correctness = ans.Equals(items[index].answer.ToLower());
             if (correctness)
             {
-
+                pointsManager.IncreasePoints();
                 MessageBox.Show("Odpowiedź prawidłowa");
                 index++;
                 if (index >= items.Count - 1) index = 0;
                 TextBox.Text = "";
                 DisplayQuestion();
+                DisplayCurrentResult();
+                DisplayRecord();
             }
             else
             {
+                pointsManager.ResetPoints();
                 TextBox.Text = "";
                 MessageBox.Show("Odpowiedź błędna");
             }
@@ -172,6 +200,14 @@ namespace Quizyy_wpf.View
         private void DisplayQuestion()
         {
             DisplayTextBlock.Text = items[index].question;
+        }
+        private void DisplayCurrentResult()
+        {
+            CurrentResult.Text = pointsManager.Show(1).ToString();
+        }
+        private void DisplayRecord()
+        {
+            Record.Text = pointsManager.Show(0).ToString();
         }
     }
 }
