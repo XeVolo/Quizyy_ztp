@@ -16,15 +16,15 @@ namespace Quizyy_wpf
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private static RealConnection realconnection = new RealConnection();
-		public static DatabaseProxy proxy1 = new DatabaseProxy(realconnection);
+		private static DatabaseConnection realconnection = new DatabaseConnection();
+		public static DatabaseConnectionProxy proxy1 = new DatabaseConnectionProxy(realconnection);
 		public MainWindow()
 		{
 			//UpdateDatabase();
 			InitializeComponent();
 			GenerateButtons();
 		}
-		public DatabaseProxy GetProxy()
+		public DatabaseConnectionProxy GetProxy()
 		{
 			return proxy1;
 		}
