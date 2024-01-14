@@ -66,6 +66,16 @@ namespace Quizyy_wpf
 
                 buttonPanel.Children.Add(button);
             }
+            Button button2 = new Button
+            {
+                Content = "Dodaj nowe",
+                Margin = new Thickness(750, 500, 0, 0),
+                Width = 180,
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle"),
+            };
+            button2.Click += NewResource;
+            MainGrid.Children.Add(button2);
             MainGrid.Children.Add(buttonPanel);
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -112,7 +122,12 @@ namespace Quizyy_wpf
 
         }
 
-        private void UpdateDatabase()
+        private void NewResource(object sender, RoutedEventArgs e)
+        {
+            Window window2 = new Window();
+            window2.Show();
+        }
+        /*private void UpdateDatabase()
         {				
 				string path = "E:\\Studia\\ztp\\Projekt\\Quizyy wpf\\danefiszki2.txt";
 				string[] lines = File.ReadAllLines(path);
@@ -131,8 +146,7 @@ namespace Quizyy_wpf
 					}
 				}
 				
-				
-				
+							
 				string path2 = "E:\\Studia\\ztp\\Projekt\\Quizyy wpf\\danepytanie1.txt";
 				string[] lines2 = File.ReadAllLines(path2);
 				foreach (var line in lines2)
@@ -151,8 +165,8 @@ namespace Quizyy_wpf
                     questionSaving.Save();
 					}
 				}
-						
-			}
+					
+			}*/
 		}
 
 
