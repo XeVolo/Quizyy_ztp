@@ -13,7 +13,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Quizyy_wpf.Command;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.Proxy;
+using Quizyy_wpf.State;
 
 namespace Quizyy_wpf.View
 {
@@ -25,39 +28,54 @@ namespace Quizyy_wpf.View
         private MainWindow mainWindow1;
         private StackPanel? stackPanel1;
         private StackPanel? stackPanel2;
-        private TextBlock? DisplayTextBlock1;
-        private TextBlock? DisplayTextBlock2;
-        private TextBlock? DisplayTextBlock3;
-        private string? concept;
-        private string? definition;
-        private int? conceptid;
-        private int? definitionid;
-        private Button? chosen1;
-        private Button? chosen2;
-        private int resoult = 0;
-        private static FitView instance; 
+		public TextBlock? DisplayTextBlock1;
+		public TextBlock? DisplayTextBlock2;
+		public TextBlock? DisplayTextBlock3;     
+        public Button? undoButton;
+        public Button? redoButton;
+        private static FitView instance;
+
+		public string? concept;
+		public string? definition;
+		public int? conceptid;
+		public int? definitionid;
+		public Button? chosen1;
+		public Button? chosen2;
+		public int resoult = 0;
+		public ConnectionHistory undoHistory = new ConnectionHistory();
+		public ConnectionHistory redoHistory = new ConnectionHistory();
+
+		private State1 state = null;
+
+
+        private List<FlashCardsModel> items = new List<FlashCardsModel>();
+
 
 		public static FitView GetInstance(MainWindow mainView)
-		{
-			if (instance == null)
-			{
-				instance = new FitView(mainView);
-			}
-			return instance;
-		}
-		private FitView(MainWindow mainView)
         {
+            if (instance == null)
+            {
+                instance = new FitView(mainView);
+            }
+            return instance;
+        }
+        private FitView(MainWindow mainView)
+        {
+            TransitionTo(new NoneChoosenState());
             mainWindow1 = mainView;
-            InitializeComponent();
+			DatabaseProxy proxy2 = mainWindow1.GetProxy();
+			items = proxy2.GetFlashCardsList();
+			InitializeComponent();
             OpenMode();
         }
         public void OpenMode()
-        {          
+        {
             NewSet();
         }
+        
         private int GetRandom()
         {
-            List<FlashCardsModel> lista = BaseController.GetFlashCardsList();
+            List<FlashCardsModel> lista = items;
             int size = lista.Count - 7;
             Random rnd = new Random();
             int result = rnd.Next(size);
@@ -82,7 +100,7 @@ namespace Quizyy_wpf.View
         }
         private void NewSet()
         {
-            List<FlashCardsModel> list = BaseController.GetFlashCardsList();
+            List<FlashCardsModel> list = items;
             int first = GetRandom();
             Range xy = new Range(first, first + 6);
             List<int> drawn = GetNumbers(xy);
@@ -111,7 +129,7 @@ namespace Quizyy_wpf.View
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
                 };
-                leftButtons.Click += LeftButtonClick;
+                leftButtons.Click += ChooseButtonClick;
 
                 stackPanel1.Children.Add(leftButtons);
             }
@@ -128,7 +146,7 @@ namespace Quizyy_wpf.View
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
                 };
-                rightButtons.Click += RightButtonClick;
+                rightButtons.Click += ChooseButtonClick;
 
                 stackPanel2.Children.Add(rightButtons);
             }
@@ -155,87 +173,77 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Style = (Style)FindResource("CustomTextStyle")
             };
-            MainGrid.Children.Add(DisplayTextBlock1);
+		    undoButton = new Button
+			{
+				Content = "Cofnij",
+				Margin = new Thickness(0, 0, 800, 200),
+				Width = 100,
+				Height = 30,
+				Style = (Style)FindResource("CustomButtonStyle"),
+                IsEnabled= false
+			};
+			undoButton.Click += UndoButtonClick;
+			redoButton = new Button
+			{
+				Content = "Przywróć",
+				Margin = new Thickness(800, 5, 0, 200),
+				Width = 100,
+				Height = 30,
+				Style = (Style)FindResource("CustomButtonStyle"),
+				IsEnabled = false
+			};
+			redoButton.Click += RedoButtonClick;
+
+            MainGrid.Children.Add(undoButton);
+            MainGrid.Children.Add(redoButton);
+			MainGrid.Children.Add(DisplayTextBlock1);
             MainGrid.Children.Add(DisplayTextBlock2);
             MainGrid.Children.Add(DisplayTextBlock3);
         }
-        private void LeftButtonClick(object sender, RoutedEventArgs e)
+        public void TransitionTo(State1 state)
         {
-
-            if (sender is Button clickedButton)
-            {
-                concept = clickedButton.Content.ToString();
-                conceptid = Convert.ToInt32(clickedButton.Tag);
-                DisplayTextBlock1.Text = "Wybrano: " + concept;
-                chosen1 = clickedButton;
-
-			}
-            if (concept != null && definition != null)
-            {
-                CheckCorrectness();
-            }
+            this.state= state;
+            this.state.SetContext(this);
             
-			
+        }
 
-		}
-        private void RightButtonClick(object sender, RoutedEventArgs e)
+        private void ChooseButtonClick(object sender, RoutedEventArgs e)
         {
-
             if (sender is Button clickedButton)
             {
-                definition = clickedButton.Content.ToString();
-                definitionid = Convert.ToInt32(clickedButton.Tag);
-                DisplayTextBlock2.Text = "Wybrano: " + definition;
-                chosen2 = clickedButton;
-            }
-            if (concept != null && definition != null)
-            {
-                CheckCorrectness();
-            }
+                state.ChooseOption(clickedButton);
+                state.ShowResult();
+
+                if (state.GetType() == typeof(SecondChoosenState))
+                {
+					state.ShowResult();
+				}
+			}
         }
-        private void CheckCorrectness()
+        
+        private void UndoButtonClick(object sender, RoutedEventArgs e)
         {
-            if (conceptid == definitionid)
+            FitCommand var1 = undoHistory.Pop();
+            if (undoHistory.IsEmpty())
             {
-                DisplayTextBlock3.Text = "Połączenie poprawne";
-                
-				DoubleAnimation animation = new DoubleAnimation();
-				animation.From = 1.0;
-				animation.To = 0.0;
-				animation.Duration = new Duration(TimeSpan.FromSeconds(1)); 
-
-				Storyboard.SetTarget(animation, chosen1);			
-				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
-				Storyboard storyboard = new Storyboard();
-				storyboard.Children.Add(animation);
-				storyboard.Begin();
-
-				Storyboard.SetTarget(animation, chosen2);
-				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
-				Storyboard storyboard2 = new Storyboard();
-				storyboard2.Children.Add(animation);
-				storyboard2.Begin();
-				resoult++;
+                undoButton.IsEnabled = false;
             }
-            else
-            {
-                DisplayTextBlock3.Text = "Połączenie błędne";
-            }
-            DisplayTextBlock1.Text = "";
-            DisplayTextBlock2.Text = "";
-            concept = null;
-            definition = null;
-            conceptid = null;
-            definitionid = null;
-            chosen1 = null;
-            chosen2 = null;
-            if (resoult == 7)
-            {
-				DisplayTextBlock3.Text = "";
-				resoult = 0;
-                OpenMode();
-            }
-
+            resoult--;
+            var1.undo();
+            redoHistory.Push(var1);
+            redoButton.IsEnabled= true;
         }
-    }
+		private void RedoButtonClick(object sender, RoutedEventArgs e)
+		{
+			FitCommand var1 = redoHistory.Pop();
+			if (redoHistory.IsEmpty())
+			{
+				redoButton.IsEnabled = false;
+			}
+            resoult++;
+			var1.redo();
+			undoHistory.Push(var1);
+			undoButton.IsEnabled = true;
+		}
+	}
 }

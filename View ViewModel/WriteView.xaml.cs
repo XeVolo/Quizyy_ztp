@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quizyy_wpf.Model;
+using Quizyy_wpf.Proxy;
 
 namespace Quizyy_wpf.View
 {
@@ -28,8 +29,8 @@ namespace Quizyy_wpf.View
         private Button? contextButton;
         private TextBlock? DisplayTextBlock;
         private TextBox? TextBox;
-        private List<WriteModel> items = BaseController.GetWriteList();
-        private int index = 0;
+		private List<WriteModel> items = new List<WriteModel>();
+		private int index = 0;
         private static WriteView instance;
 
 		public static WriteView GetInstance(MainWindow mainView)
@@ -43,7 +44,9 @@ namespace Quizyy_wpf.View
 		private WriteView(MainWindow mainView)
         {
             mainWindow1 = mainView;
-            InitializeComponent();
+			DatabaseProxy proxy2 = mainWindow1.GetProxy();
+			items = proxy2.GetWriteList();
+			InitializeComponent();
             OpenMode();
         }
         public void OpenMode()

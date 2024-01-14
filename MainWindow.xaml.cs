@@ -1,4 +1,7 @@
-﻿using Quizyy_wpf.View;
+﻿
+using Quizyy_wpf.Model;
+using Quizyy_wpf.Proxy;
+using Quizyy_wpf.View;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -13,14 +16,18 @@ namespace Quizyy_wpf
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		
+		private static RealConnection realconnection = new RealConnection();
+		public static DatabaseProxy proxy1 = new DatabaseProxy(realconnection);
 		public MainWindow()
 		{
 			//UpdateDatabase();
 			InitializeComponent();
 			GenerateButtons();
 		}
-		
+		public DatabaseProxy GetProxy()
+		{
+			return proxy1;
+		}
 
         public void GenerateButtons()
         {
