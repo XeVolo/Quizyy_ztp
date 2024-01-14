@@ -13,9 +13,22 @@ namespace Quizyy_wpf.Proxy
 
 		List<WriteModel> GetWriteList();
 
+<<<<<<< Updated upstream
 		void SaveFlashCards();
 
 		void SaveWriteList();
+=======
+                var isExist = context.FlashCards.FirstOrDefault(f => f.concept == flashCard.concept && f.definition == flashCard.definition);
+                if (isExist == null)
+                {
+                    var lastId = context.FlashCards.OrderByDescending(f => f.id).Select(f => f.id).FirstOrDefault();
+                    flashCard.id = lastId + 1;
+                    context.FlashCards.Add(flashCard);
+                    context.SaveChanges();
+                }
+            } */
+        }
+>>>>>>> Stashed changes
 
 	}
 }
