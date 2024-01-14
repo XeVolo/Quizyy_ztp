@@ -8,11 +8,11 @@ namespace Quizyy_wpf.Observer
 {
     public class PointsObserver : IObserver
     {
-        public void Update(int Points)
+        public virtual void Update(int Points)
         {
 
         }
-        public int GetPoints()
+        public virtual int GetPoints()
         {
             return 0;
         }

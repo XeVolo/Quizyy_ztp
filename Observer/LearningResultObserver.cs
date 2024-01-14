@@ -9,11 +9,11 @@ namespace Quizyy_wpf.Observer
     public class LearningResultObserver : PointsObserver
     {
         private int CurrentResult;
-        public int GetPoints()
+        public override int GetPoints()
         {
             return CurrentResult;
         }
-        new public void Update(int result)
+        public override void Update(int result)
         {
             CurrentResult = result;
         }

@@ -9,11 +9,11 @@ namespace Quizyy_wpf.Observer
     public class RecordObserver : PointsObserver
     { 
         private int BestResult;
-        public int GetPoints()
+        public override int GetPoints()
         {
             return BestResult;
         }
-        new public void Update(int result)
+        public override void Update(int result)
         {
             if(BestResult<result)
                 BestResult = result;
