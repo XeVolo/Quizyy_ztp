@@ -63,7 +63,7 @@ namespace Quizyy_wpf.View
         {
             TransitionTo(new NoneChoosenState());
             mainWindow1 = mainView;
-			DatabaseProxy proxy2 = mainWindow1.GetProxy();
+			DatabaseConnectionProxy proxy2 = mainWindow1.GetProxy();
 			items = proxy2.GetFlashCardsList();
 			InitializeComponent();
             OpenMode();

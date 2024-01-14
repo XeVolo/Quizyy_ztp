@@ -48,7 +48,7 @@ namespace Quizyy_wpf.View
         {
             InitializeComponent();
             mainWindow = mainView;
-            DatabaseProxy proxy2 = mainWindow.GetProxy();
+            DatabaseConnectionProxy proxy2 = mainWindow.GetProxy();
             items = proxy2.GetWriteList();
 
 			OpenMode();

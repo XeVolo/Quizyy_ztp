@@ -40,7 +40,7 @@ namespace Quizyy_wpf.View
 		private FlashCardsView(MainWindow mainView)
 		{
 			mainWindow = mainView;
-			DatabaseProxy proxy2 = mainWindow.GetProxy();
+			DatabaseConnectionProxy proxy2 = mainWindow.GetProxy();
 			items = proxy2.GetFlashCardsList();
 			defaultIterator = new FlashCardsDefaultIterator(items);
 			randomIterator = new FlashCardsRandomIterator(items);
