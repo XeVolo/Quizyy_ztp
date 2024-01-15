@@ -8,14 +8,17 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10" BorderBrush="#FF921313" BorderThickness="2" Background="#FF4081">
+                        <Border x:Name="border" CornerRadius="10" BorderBrush="#FF921313" BorderThickness="2" Background="#FF4081">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
-                            <Trigger Property="Control.IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Yellow"/>
-                                <Setter Property="BorderBrush" Value="Green"/>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Yellow"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="Green"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="Gray"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

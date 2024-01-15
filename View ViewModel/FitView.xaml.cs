@@ -194,7 +194,8 @@ namespace Quizyy_wpf.View
 			};
 			redoButton.Click += RedoButtonClick;
 
-            MainGrid.Children.Add(undoButton);
+           
+			MainGrid.Children.Add(undoButton);
             MainGrid.Children.Add(redoButton);
 			MainGrid.Children.Add(DisplayTextBlock1);
             MainGrid.Children.Add(DisplayTextBlock2);
@@ -212,12 +213,9 @@ namespace Quizyy_wpf.View
             if (sender is Button clickedButton)
             {
                 state.ChooseOption(clickedButton);
+                state.ShowChosen();
                 state.ShowResult();
-
-                if (state.GetType() == typeof(SecondChoosenState))
-                {
-					state.ShowResult();
-				}
+				
 			}
         }
         

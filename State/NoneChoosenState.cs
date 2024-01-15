@@ -18,10 +18,15 @@ namespace Quizyy_wpf.State
 			context.conceptid = Convert.ToInt32(clickedButton.Tag);
 			context.chosen1 = clickedButton;
         }
-        public override void ShowResult()
+		public override void ShowChosen()
+		{
+			context.DisplayTextBlock1.Text = "Wybrano: " + context.concept;
+			context.TransitionTo(new FirstChoosenState());
+		}
+		public override void ShowResult()
         {
-            context.DisplayTextBlock1.Text = "Wybrano: " + context.concept;
-            context.TransitionTo(new FirstChoosenState());
+            
+            
         }
 
     }

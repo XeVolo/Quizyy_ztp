@@ -17,6 +17,7 @@ namespace Quizyy_wpf.State
             this.context = context;
         }
         public abstract void ChooseOption(Button clickedButton);
+        public abstract void ShowChosen();
         public abstract void ShowResult();
 
     }

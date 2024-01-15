@@ -15,6 +15,10 @@ namespace Quizyy_wpf.State
 		{
 			
 		}
+		public override void ShowChosen()
+		{
+				
+		}
 		public override void ShowResult()
 		{
 			if (context.conceptid == context.definitionid)
