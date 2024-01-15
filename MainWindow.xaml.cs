@@ -78,7 +78,7 @@ namespace Quizyy_wpf
 				}
 
 				 buttonPanel.Children.Add(button);
-			}
+			}			
 			MainGrid.Children.Add(buttonPanel);
 		}
         private void BackButton_Click(object sender, RoutedEventArgs e)

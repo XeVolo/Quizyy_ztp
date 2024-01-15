@@ -29,7 +29,8 @@ namespace Quizyy_wpf.View
         private Button? nextButton;
         private Button? contextButton;
         private TextBlock? DisplayTextBlock;
-        private TextBlock? CurrentResult;
+		private TextBlock? DifficultyLvlTextBlock;
+		private TextBlock? CurrentResult;
         private TextBlock? Record;
         private TextBox? TextBox;
         private List<WriteModel> items = new List<WriteModel>();
@@ -134,11 +135,17 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Width = 200
             };
+			DifficultyLvlTextBlock = new TextBlock
+			{
+				Margin = new Thickness(700, 500, 0, 0),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Height = 30,
+				Style = (Style)FindResource("CustomTextStyle")
+			};
 
-            Grid.SetRow(stackPanel, 0);
-            Grid.SetRow(DisplayTextBlock, 1);
-            Grid.SetRow(CurrentResult, 2);
-            Grid.SetRow(Record, 3);
+			MainGrid.Children.Add(DifficultyLvlTextBlock);
+			
 
             MainGrid.Children.Add(stackPanel);
             MainGrid.Children.Add(DisplayTextBlock);
@@ -200,7 +207,9 @@ namespace Quizyy_wpf.View
         private void DisplayQuestion()
         {
             DisplayTextBlock.Text = items[index].question;
-        }
+            DifficultyLvlTextBlock.Text = "";
+			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl;
+		}
         private void DisplayCurrentResult()
         {
             CurrentResult.Text = pointsManager.Show(1).ToString();

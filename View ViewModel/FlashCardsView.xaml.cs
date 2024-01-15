@@ -19,6 +19,7 @@ namespace Quizyy_wpf.View
 		private Button? chooseRandomButton;
 		private Button? chooseBy3Button;
 		private TextBlock? DisplayTextBlock;
+		private TextBlock? DifficultyLvlTextBlock;
 		private List<FlashCardsModel> items = new List<FlashCardsModel>();
 		private int currentIndex = 1;
 		private int control = 0;
@@ -131,7 +132,16 @@ namespace Quizyy_wpf.View
 				Height = 30,
 				Style = (Style)FindResource("CustomTextStyle")
 			};
+			DifficultyLvlTextBlock = new TextBlock
+			{
+				Margin = new Thickness(700, 500, 0, 0),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Height = 30,
+				Style = (Style)FindResource("CustomTextStyle")
+			};
 
+			MainGrid.Children.Add(DifficultyLvlTextBlock);
 			MainGrid.Children.Add(stackPanel);
 			MainGrid.Children.Add(stackPanel2);
 			MainGrid.Children.Add(DisplayTextBlock);
@@ -229,6 +239,7 @@ namespace Quizyy_wpf.View
 			if (items.Count > 0 && currentIndex >= 0 && currentIndex < items.Count)
 			{
 				DisplayTextBlock.Text = items[currentIndex].concept;
+				DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[currentIndex].difficultylvl;
 				control = 1;
 			}
 		}

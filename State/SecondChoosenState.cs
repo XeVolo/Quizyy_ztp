@@ -47,6 +47,7 @@ namespace Quizyy_wpf.State
 			context.chosen2 = null;
 			if (context.resoult == 7)
 			{
+				context.DifficultyLvlTextBlock.Text = "";
 				context.DisplayTextBlock3.Text = "";
 				context.resoult = 0;
 				context.OpenMode();

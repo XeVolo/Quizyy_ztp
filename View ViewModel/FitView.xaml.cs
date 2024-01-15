@@ -30,8 +30,9 @@ namespace Quizyy_wpf.View
         private StackPanel? stackPanel2;
 		public TextBlock? DisplayTextBlock1;
 		public TextBlock? DisplayTextBlock2;
-		public TextBlock? DisplayTextBlock3;     
-        public Button? undoButton;
+		public TextBlock? DisplayTextBlock3;
+		public TextBlock? DifficultyLvlTextBlock;
+		public Button? undoButton;
         public Button? redoButton;
         private static FitView instance;
 
@@ -193,8 +194,17 @@ namespace Quizyy_wpf.View
 				IsEnabled = false
 			};
 			redoButton.Click += RedoButtonClick;
+			DifficultyLvlTextBlock = new TextBlock
+			{
+				Margin = new Thickness(700, 500, 0, 0),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Height = 30,
+				Style = (Style)FindResource("CustomTextStyle")
+			};			
+			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[drawn[0]].difficultylvl;
+			MainGrid.Children.Add(DifficultyLvlTextBlock);
 
-           
 			MainGrid.Children.Add(undoButton);
             MainGrid.Children.Add(redoButton);
 			MainGrid.Children.Add(DisplayTextBlock1);

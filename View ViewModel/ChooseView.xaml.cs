@@ -29,7 +29,8 @@ namespace Quizyy_wpf.View
         private Button? ansButton2;
         private Button? ansButton3;
         private Button? ansButton4;
-        private TextBlock? DisplayTextBlock;
+		private TextBlock? DifficultyLvlTextBlock;
+		private TextBlock? DisplayTextBlock;
 		//private static RealConnection realconnection = new RealConnection();
 		//private static DatabaseProxy proxy = new DatabaseProxy(realconnection);
 		private List<WriteModel> items = new List<WriteModel>();
@@ -71,14 +72,14 @@ namespace Quizyy_wpf.View
             {
                 Orientation = Orientation.Vertical,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 100, 0, 0)
             };
             stackPanel2 = new StackPanel
             {
                 Orientation = Orientation.Vertical,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 100, 0, 0)
             };
             ansButton1 = new Button
@@ -116,7 +117,17 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
-            ansButton4.Click += AnsButtonClick;
+			DifficultyLvlTextBlock = new TextBlock
+			{
+				Margin = new Thickness(700, 500, 0, 0),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Height = 30,
+				Style = (Style)FindResource("CustomTextStyle")
+			};
+
+			MainGrid.Children.Add(DifficultyLvlTextBlock);
+			ansButton4.Click += AnsButtonClick;
             stackPanel1.Children.Add(ansButton1);
             stackPanel1.Children.Add(ansButton2);
             stackPanel2.Children.Add(ansButton3);
@@ -171,6 +182,7 @@ namespace Quizyy_wpf.View
 
                     MessageBox.Show("Odpowiedź prawidłowa");
                     DisplayTextBlock.Text = "";
+                    DifficultyLvlTextBlock.Text = "";
                     NewSet();
                 }
                 else
@@ -183,6 +195,7 @@ namespace Quizyy_wpf.View
         private void DisplayQuestion()
         {
             DisplayTextBlock.Text = items[index].question;
-        }
+			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl;
+		}
     }
 }
