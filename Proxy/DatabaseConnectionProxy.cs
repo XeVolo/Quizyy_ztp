@@ -1,4 +1,5 @@
-﻿using Quizyy_wpf.Model;
+﻿using Quizyy_wpf.Flyweight;
+using Quizyy_wpf.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,24 +21,39 @@ namespace Quizyy_wpf.Proxy
         private string _difficultylvl;
         private string _concept;
         private string _definition;
-        public  DatabaseConnectionProxy(DatabaseConnection realConnection)
+		DifficultyLevelFlyweight difficultyFlyweight = new DifficultyLevelFlyweight();
+		public  DatabaseConnectionProxy(DatabaseConnection realConnection)
 		{
 			this.realConnection = realConnection;
 		}
 
 		public List<FlashCardsModel> GetFlashCardsList()
 		{
+
+			
 			if (flashcardslist == null)
 			{
-				flashcardslist=realConnection.GetFlashCardsList();
+				List<FlashCardsModel> rawData = realConnection.GetFlashCardsList();
+				foreach (var card in rawData)
+				{
+					card.difficultylvl = difficultyFlyweight.GetDifficultyLevel(card.difficultylvl);
+				}
+
+				flashcardslist = rawData;
 			}
 			return flashcardslist;
 		}
 		public List<WriteModel> GetWriteList()
 		{
+			
 			if (writelist == null)
 			{
-				writelist=realConnection.GetWriteList();
+				List<WriteModel> rawData = realConnection.GetWriteList();
+				foreach (var question in rawData)
+				{
+					question.difficultylvl = difficultyFlyweight.GetDifficultyLevel(question.difficultylvl);
+				}
+                writelist = rawData;
 			}
 			return writelist;
 		}
@@ -45,7 +61,7 @@ namespace Quizyy_wpf.Proxy
         {
             _concept = concept;
             _definition = definition;
-            _difficultylvl = difficultylvl;
+            _difficultylvl = difficultyFlyweight.GetDifficultyLevel(difficultylvl);
             SaveFlashCards();
         }
 
@@ -56,8 +72,8 @@ namespace Quizyy_wpf.Proxy
             _incorrectans1 = incorrectans1;
             _incorrectans2 = incorrectans2;
             _incorrectans3 = incorrectans3;
-            _difficultylvl = difficultylvl;
-            SaveWriteList();
+            _difficultylvl = difficultyFlyweight.GetDifficultyLevel(difficultylvl);
+			SaveWriteList();
         }
         public void SaveFlashCards()
 		{
@@ -106,5 +122,6 @@ namespace Quizyy_wpf.Proxy
                 write.id = lastId;
                 writelist.Add(write);           
         }
+
 	}
 }
