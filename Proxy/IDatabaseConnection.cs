@@ -13,9 +13,9 @@ namespace Quizyy_wpf.Proxy
 
 		List<WriteModel> GetWriteList();
 
-		void SaveFlashCards();
+		void SaveFlashCards(string _concept, string _definition, string _difficultylvl);
 		 
-		void SaveWriteList();
+		void SaveWriteList(string _question, string _answer, string _incorrectans1, string _incorrectans2, string _incorrectans3, string _difficultylvl);
 
 	}
 }

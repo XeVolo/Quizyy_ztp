@@ -57,14 +57,16 @@ namespace Quizyy_wpf.Proxy
 			}
 			return writelist;
 		}
+        /*
         public void SetFlashCardsData(string concept, string definition, string difficultylvl)
         {
             _concept = concept;
             _definition = definition;
             _difficultylvl = difficultyFlyweight.GetDifficultyLevel(difficultylvl);
             SaveFlashCards();
-        }
-
+        }*/
+        
+        /*
         public void SetWriteListData(string question, string answer, string incorrectans1, string incorrectans2, string incorrectans3, string difficultylvl)
         {
             _question = question;
@@ -74,8 +76,8 @@ namespace Quizyy_wpf.Proxy
             _incorrectans3 = incorrectans3;
             _difficultylvl = difficultyFlyweight.GetDifficultyLevel(difficultylvl);
 			SaveWriteList();
-        }
-        public void SaveFlashCards()
+        }*/
+        public void SaveFlashCards(string _concept, string _definition, string _difficultylvl)
 		{
             // int id = 0;
             FlashCardsModel flashCard = new FlashCardsModel
@@ -93,12 +95,12 @@ namespace Quizyy_wpf.Proxy
                 //flashcardslist.Add(flashCard);
 
                 var lastId = flashcardslist.OrderByDescending(f => f.id).Select(f => f.id).FirstOrDefault();
-                flashCard.id = lastId;
+                flashCard.id = lastId + 1;
                 flashcardslist.Add(flashCard);
             
            
         }
-		public void SaveWriteList()
+		public void SaveWriteList(string _question, string _answer, string _incorrectans1, string _incorrectans2, string _incorrectans3, string _difficultylvl)
 		{
             //int id = 0;
             WriteModel write= new WriteModel

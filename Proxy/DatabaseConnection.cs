@@ -24,7 +24,7 @@ namespace Quizyy_wpf.Proxy
                 return list;
             }
         }
-        public void SaveFlashCards()
+        public void SaveFlashCards(string _concept, string _definition, string _difficultylvl)
         {
             /*using (var context = new MyBaseContext())
             {
@@ -40,7 +40,7 @@ namespace Quizyy_wpf.Proxy
             }*/
         }
 
-        public void SaveWriteList()
+        public void SaveWriteList(string _question, string _answer, string _incorrectans1, string _incorrectans2, string _incorrectans3, string _difficultylvl)
         {
             /*
             using (var context = new MyBaseContext())
