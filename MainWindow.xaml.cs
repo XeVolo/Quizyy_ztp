@@ -80,7 +80,19 @@ namespace Quizyy_wpf
 				 buttonPanel.Children.Add(button);
 			}			
 			MainGrid.Children.Add(buttonPanel);
-		}
+
+            Button button2 = new Button
+            {
+                Content = "Dodaj nowe",
+                Margin = new Thickness(750, 500, 0, 0),
+                Width = 180,
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle"),
+            };
+            button2.Click += NewResource;
+            MainGrid.Children.Add(button2);
+            MainGrid.Children.Add(buttonPanel);
+        }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             contentControl.Content = null;
