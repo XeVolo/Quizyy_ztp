@@ -1,26 +1,16 @@
-﻿
-using Quizyy_wpf.Model;
-using Quizyy_wpf.Proxy;
+﻿using Quizyy_wpf.Proxy;
 using Quizyy_wpf.View;
-using System.IO;
-using System.Reflection;
-using System.Text;
+using Quizyy_wpf.View_ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Quizyy_wpf
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
 	{
 		private static DatabaseConnection realconnection = new DatabaseConnection();
 		public static DatabaseConnectionProxy proxy1 = new DatabaseConnectionProxy(realconnection);
@@ -44,7 +34,7 @@ namespace Quizyy_wpf
 			{
 				Orientation = Orientation.Horizontal,
 				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Top,
+				VerticalAlignment = VerticalAlignment.Center,
 				Margin = new Thickness(0, 200, 0, 0)
 			};
 
@@ -79,7 +69,6 @@ namespace Quizyy_wpf
 
 				 buttonPanel.Children.Add(button);
 			}			
-			MainGrid.Children.Add(buttonPanel);
 
             Button button2 = new Button
             {
@@ -89,7 +78,7 @@ namespace Quizyy_wpf
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle"),
             };
-            button2.Click += NewResource;
+            button2.Click += UpdateDatabase;
             MainGrid.Children.Add(button2);
             MainGrid.Children.Add(buttonPanel);
         }
@@ -136,8 +125,13 @@ namespace Quizyy_wpf
             }
             
         }
-
-        private void UpdateDatabase()
+        private void UpdateDatabase(object sender, RoutedEventArgs e)
+        {
+            MainGrid.Children.Clear();
+            contentControl.Content = UpdateView.GetInstance(this);
+            backButton.Visibility = Visibility.Visible;
+        }
+        /*private void UpdateDatabase()
         {
 			using (var context = new MyBaseContext())
 			{
@@ -201,7 +195,7 @@ namespace Quizyy_wpf
 				
 				context.Dispose();
 			}
-		}
+		}*/
 
 
     }

@@ -13,14 +13,7 @@ namespace Quizyy_wpf.Proxy
 		private DatabaseConnection realConnection;
 		private List<FlashCardsModel>? flashcardslist;
 		private List<WriteModel>? writelist;
-        private string _question;
-        private string _answer;
-        private string _incorrectans1;
-        private string _incorrectans2;
-        private string _incorrectans3;
-        private string _difficultylvl;
-        private string _concept;
-        private string _definition;
+
 		DifficultyLevelFlyweight difficultyFlyweight = new DifficultyLevelFlyweight();
 		public  DatabaseConnectionProxy(DatabaseConnection realConnection)
 		{
@@ -120,8 +113,8 @@ namespace Quizyy_wpf.Proxy
                 //write.id = id;
                 //writelist.Add(write);
 
-                var lastId = flashcardslist.OrderByDescending(f => f.id).Select(f => f.id).FirstOrDefault();
-                write.id = lastId;
+                var lastId = writelist.OrderByDescending(f => f.id).Select(f => f.id).FirstOrDefault();
+                write.id = lastId + 1;
                 writelist.Add(write);           
         }
 

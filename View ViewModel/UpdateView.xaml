@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Quizyy_wpf.View_ViewModel.UpdateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Quizyy_wpf.View_ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid x:Name="MainGrid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ContentControl x:Name="contentControl"/>
+    </Grid>
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+</UserControl>
