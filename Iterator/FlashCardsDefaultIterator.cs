@@ -32,16 +32,6 @@ namespace Quizyy_wpf
 			get { return items[currentIndex]; }
 		}
 
-		public void Dispose()
-		{
-			throw new NotImplementedException();
-		}
-
-		public IEnumerator<FlashCardsModel> GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
-
 		public bool MoveNext()
 		{
 			if (currentIndex < items.Count - 1)
@@ -83,11 +73,6 @@ namespace Quizyy_wpf
 		public int GetCurrentIndex()
 		{
 			return currentIndex;
-		}
-
-		public void Reset()
-		{
-			throw new NotImplementedException();
 		}
 	}
 

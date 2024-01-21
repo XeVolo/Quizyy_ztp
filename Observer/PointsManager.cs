@@ -42,6 +42,7 @@ namespace Quizyy_wpf.Observer
         public void ResetPoints()
         {
             Points = 0;
+            Notify();
         }
     }
 }

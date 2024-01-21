@@ -18,8 +18,10 @@ namespace Quizyy_wpf.View
 		private Button? contextButton;
 		private Button? chooseRandomButton;
 		private Button? chooseBy3Button;
+		private Button? standardButton;
 		private TextBlock? DisplayTextBlock;
 		private TextBlock? DifficultyLvlTextBlock;
+		private TextBlock? Mode;
 		private List<FlashCardsModel> items = new List<FlashCardsModel>();
 		private int currentIndex = 1;
 		private int control = 0;
@@ -102,17 +104,27 @@ namespace Quizyy_wpf.View
 			chooseRandomButton = new Button
 			{
 				Content = "Losowo",
-				Margin = new Thickness(-5, 350, 0, 0),
+				Margin = new Thickness(200, 350, 0, 0),
 				Width = 180,
 				Height = 30,
 				Style = (Style)FindResource("CustomButtonStyle")
 			};
 			chooseRandomButton.Click += ChooseRandomButtonClick;
 
-			chooseBy3Button = new Button
+            standardButton = new Button
+            {
+                Content = "Po koleji",
+                Margin = new Thickness(-900, 350, 0, 0),
+                Width = 180,
+                Height = 30,
+                Style = (Style)FindResource("CustomButtonStyle")
+            };
+            chooseRandomButton.Click += ChooseRandomButtonClick;
+
+            chooseBy3Button = new Button
 			{
 				Content = "Co trzecie",
-				Margin = new Thickness(5, 350, 0, 0),
+				Margin = new Thickness(0, 350, 0, 0),
 				Width = 180,
 				Height = 30,
 				Style = (Style)FindResource("CustomButtonStyle")
@@ -124,6 +136,7 @@ namespace Quizyy_wpf.View
 			stackPanel.Children.Add(nextButton);
 			stackPanel2.Children.Add(chooseRandomButton);
 			stackPanel2.Children.Add(chooseBy3Button);
+			stackPanel2.Children.Add(standardButton);
 
 			DisplayTextBlock = new TextBlock
 			{
@@ -140,11 +153,21 @@ namespace Quizyy_wpf.View
 				Height = 30,
 				Style = (Style)FindResource("CustomTextStyle")
 			};
+			Mode = new TextBlock
+			{
+				Margin = new Thickness(700, 450, 0, 0),
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Height = 30,
+				Style = (Style)FindResource("CustomTextStyle"),
+				Text = "Tryb: Po koleji"
+            };
 
-			MainGrid.Children.Add(DifficultyLvlTextBlock);
+            MainGrid.Children.Add(DifficultyLvlTextBlock);
 			MainGrid.Children.Add(stackPanel);
 			MainGrid.Children.Add(stackPanel2);
 			MainGrid.Children.Add(DisplayTextBlock);
+			MainGrid.Children.Add(Mode);
 			DisplayCurrentItem();
 		}
 
@@ -213,12 +236,20 @@ namespace Quizyy_wpf.View
 		private void ChooseRandomButtonClick(object sender, RoutedEventArgs e)
 		{
 			choose = 1;
+			Mode.Text = "Tryb: Losowo";
+		}
+
+		private void StandardButtonClick(object sender, RoutedEventArgs e)
+		{
+			choose = 0;
+			Mode.Text = "Tryb: Po koleji";
 		}
 
 		private void ChooseBy3ButtonClick(object sender, RoutedEventArgs e)
 		{
 			choose = 2;
-		}
+            Mode.Text = "Tryb: Co trzeci";
+        }
 
 		private void ContextButtonClick(object sender, RoutedEventArgs e)
 		{

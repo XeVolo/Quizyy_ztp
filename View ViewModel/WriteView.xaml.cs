@@ -30,7 +30,9 @@ namespace Quizyy_wpf.View
         private Button? contextButton;
         private TextBlock? DisplayTextBlock;
 		private TextBlock? DifficultyLvlTextBlock;
-		private TextBlock? CurrentResult;
+        private TextBlock? RecordDisplayer;
+        private TextBlock? CurrentSessionDisplayer;
+        private TextBlock? CurrentResult;
         private TextBlock? Record;
         private TextBox? TextBox;
         private List<WriteModel> items = new List<WriteModel>();
@@ -115,7 +117,7 @@ namespace Quizyy_wpf.View
             CurrentResult = new TextBlock
             {
 
-                Margin = new Thickness(100, 380, 0, 0),
+                Margin = new Thickness(190, 380, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Height = 30,
                 Style = (Style)FindResource("CustomTextStyle")
@@ -123,7 +125,7 @@ namespace Quizyy_wpf.View
             Record = new TextBlock
             {
 
-                Margin = new Thickness(-100, 380, 0, 0),
+                Margin = new Thickness(-80, 380, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Height = 30,
                 Style = (Style)FindResource("CustomTextStyle")
@@ -135,7 +137,26 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Width = 200
             };
-			DifficultyLvlTextBlock = new TextBlock
+
+            RecordDisplayer = new TextBlock
+            {
+                Margin = new Thickness(-170, 380, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
+            };
+
+            CurrentSessionDisplayer = new TextBlock
+            {
+                Margin = new Thickness(100, 380, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Height = 30,
+                Style = (Style)FindResource("CustomTextStyle")
+            };
+
+            DifficultyLvlTextBlock = new TextBlock
 			{
 				Margin = new Thickness(700, 500, 0, 0),
 				HorizontalAlignment = HorizontalAlignment.Center,
@@ -145,7 +166,8 @@ namespace Quizyy_wpf.View
 			};
 
 			MainGrid.Children.Add(DifficultyLvlTextBlock);
-			
+            MainGrid.Children.Add(RecordDisplayer);
+            MainGrid.Children.Add(CurrentSessionDisplayer);
 
             MainGrid.Children.Add(stackPanel);
             MainGrid.Children.Add(DisplayTextBlock);
@@ -153,6 +175,7 @@ namespace Quizyy_wpf.View
             MainGrid.Children.Add(Record);
             MainGrid.Children.Add(TextBox);
             DisplayQuestion();
+            ObserverDisplayer();
         }
         private void PreviousButtonClick(object sender, RoutedEventArgs e)
         {
@@ -200,6 +223,7 @@ namespace Quizyy_wpf.View
             else
             {
                 pointsManager.ResetPoints();
+                DisplayCurrentResult();
                 TextBox.Text = "";
                 MessageBox.Show("Odpowiedź błędna");
             }
@@ -210,6 +234,11 @@ namespace Quizyy_wpf.View
             DifficultyLvlTextBlock.Text = "";
 			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl;
 		}
+        private void ObserverDisplayer()
+        {
+            RecordDisplayer.Text = "Rekord:";
+            CurrentSessionDisplayer.Text = "Wynik:";
+        }
         private void DisplayCurrentResult()
         {
             CurrentResult.Text = pointsManager.Show(1).ToString();
