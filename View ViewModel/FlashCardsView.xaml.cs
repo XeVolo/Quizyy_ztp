@@ -113,13 +113,13 @@ namespace Quizyy_wpf.View
 
             standardButton = new Button
             {
-                Content = "Po koleji",
+                Content = "Po kolei",
                 Margin = new Thickness(-900, 350, 0, 0),
                 Width = 180,
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
-            chooseRandomButton.Click += ChooseRandomButtonClick;
+            standardButton.Click += ChooseRandomButtonClick;
 
             chooseBy3Button = new Button
 			{
@@ -242,7 +242,7 @@ namespace Quizyy_wpf.View
 		private void StandardButtonClick(object sender, RoutedEventArgs e)
 		{
 			choose = 0;
-			Mode.Text = "Tryb: Po koleji";
+			Mode.Text = "Tryb: Po kolei";
 		}
 
 		private void ChooseBy3ButtonClick(object sender, RoutedEventArgs e)
