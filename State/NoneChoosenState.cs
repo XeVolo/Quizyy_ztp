@@ -15,7 +15,8 @@ namespace Quizyy_wpf.State
         public override void ChooseOption(Button clickedButton)
         {
 			context.concept = clickedButton.Content.ToString();
-			context.conceptid = Convert.ToInt32(clickedButton.Tag);
+			context.conceptid = Convert.ToInt32(((object[])clickedButton.Tag)[0]);
+            context.firstpicked = ((object[])clickedButton.Tag)[1].ToString();
 			context.chosen1 = clickedButton;
         }
 		public override void ShowChosen()

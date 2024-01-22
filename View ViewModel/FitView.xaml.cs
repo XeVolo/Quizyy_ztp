@@ -36,7 +36,7 @@ namespace Quizyy_wpf.View
 		public Button? undoButton;
         public Button? redoButton;
         private static FitView instance;
-
+        public string firstpicked;
 		public string? concept;
 		public string? definition;
 		public int? conceptid;
@@ -125,8 +125,8 @@ namespace Quizyy_wpf.View
                 Button leftButtons = new Button
                 {
                     Content = list[i].concept,
-                    Tag = list[i].id,
-                    Margin = new Thickness(10, 5, 300, 5),
+					Tag = new object[] { list[i].id, "left" },
+					Margin = new Thickness(10, 5, 300, 5),
                     Width = 250,
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
@@ -142,8 +142,8 @@ namespace Quizyy_wpf.View
                 Button rightButtons = new Button
                 {
                     Content = list[i].definition,
-                    Tag = list[i].id,
-                    Margin = new Thickness(300, 5, 0, 5),
+					Tag = new object[] { list[i].id, "right" },
+					Margin = new Thickness(300, 5, 0, 5),
                     Width = 250,
                     Height = 30,
                     Style = (Style)FindResource("CustomButtonStyle")
