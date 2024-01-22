@@ -120,7 +120,7 @@ namespace Quizyy_wpf.View
                 Height = 30,
                 Style = (Style)FindResource("CustomButtonStyle")
             };
-            standardButton.Click += ChooseRandomButtonClick;
+            standardButton.Click += StandardButtonClick;
 
             chooseBy3Button = new Button
 			{
@@ -161,7 +161,7 @@ namespace Quizyy_wpf.View
 				VerticalAlignment = VerticalAlignment.Center,
 				Height = 30,
 				Style = (Style)FindResource("CustomTextStyle"),
-				Text = "Tryb: Po koleji"
+				Text = "Tryb: Po kolei"
             };
 
             MainGrid.Children.Add(DifficultyLvlTextBlock);
