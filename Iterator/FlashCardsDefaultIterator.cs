@@ -9,14 +9,18 @@ using Quizyy_wpf.Model;
 
 namespace Quizyy_wpf
 {
-	public interface IIterator<T>
+	public interface IFlashCardsIterator<T>
 	{
 		T Current { get; }
 		bool MoveNext();
 		bool MovePrevious();
-	}
+		bool HasNext();
+		bool HasPrevious();
+		int GetCurrentIndex();
 
-	public class FlashCardsDefaultIterator : IIterator<FlashCardsModel>
+    }
+
+	public class FlashCardsDefaultIterator : IFlashCardsIterator<FlashCardsModel>
 	{
 		public List<FlashCardsModel> items;
 		private int currentIndex;
@@ -32,9 +36,14 @@ namespace Quizyy_wpf
 			get { return items[currentIndex]; }
 		}
 
-		public bool MoveNext()
+        public bool HasNext()
+        {
+			return currentIndex < items.Count - 1;
+        }
+
+        public bool MoveNext()
 		{
-			if (currentIndex < items.Count - 1)
+			if (HasNext())
 			{
 				currentIndex++;
 				return true;
@@ -48,7 +57,6 @@ namespace Quizyy_wpf
 			return false;
 		}
 
-
 		public bool HasPrevious()
 		{
 			return currentIndex > 0;
@@ -56,7 +64,7 @@ namespace Quizyy_wpf
 
 		public bool MovePrevious()
 		{
-			if (currentIndex > 0)
+			if (HasPrevious())
 			{
 				currentIndex--;
 				return true;
@@ -76,7 +84,7 @@ namespace Quizyy_wpf
 		}
 	}
 
-	public class FlashCardsRandomIterator : IIterator<FlashCardsModel>
+	public class FlashCardsRandomIterator : IFlashCardsIterator<FlashCardsModel>
 	{
 		public List<FlashCardsModel> items;
 		private List<int> randomIndexes;
@@ -130,7 +138,7 @@ namespace Quizyy_wpf
 		}
 	}
 
-	public class FlashCardsBy3Iterator : IIterator<FlashCardsModel>
+	public class FlashCardsBy3Iterator : IFlashCardsIterator<FlashCardsModel>
 	{
 		public List<FlashCardsModel> items;
 		private int currentIndex;
@@ -142,10 +150,16 @@ namespace Quizyy_wpf
 			this.currentIndex = 0;
 			this.counter = 1;
 		}
+		
+		public bool HasNext()
+		{
+			return currentIndex < items.Count - 4;
+
+        }
 
 		public bool MoveNext()
 		{
-			if (currentIndex < items.Count - 4)
+			if (HasNext())
 			{
 				currentIndex += 3;
 				return true;
@@ -168,7 +182,7 @@ namespace Quizyy_wpf
 
 		public bool MovePrevious()
 		{
-			if (currentIndex > 4)
+			if (HasPrevious())
 			{
 				currentIndex -= 3;
 				return true;
