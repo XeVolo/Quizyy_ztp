@@ -236,7 +236,7 @@ namespace Quizyy_wpf.View_ViewModel
 
             TextBlock textBlock = new TextBlock
             {
-                Text = "Z jakiego pliku chcesz dodać fiszki?",
+                Text = "Z jakiego pliku chcesz dodać pytania?",
                 FontSize = 20,
                 Margin = new Thickness(10),
                 HorizontalAlignment = HorizontalAlignment.Center,
