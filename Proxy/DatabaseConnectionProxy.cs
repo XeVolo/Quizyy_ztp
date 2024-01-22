@@ -14,7 +14,6 @@ namespace Quizyy_wpf.Proxy
 		private List<FlashCardsModel>? flashcardslist;
 		private List<WriteModel>? writelist;
 
-		DifficultyLevelFlyweight difficultyFlyweight = new DifficultyLevelFlyweight();
 		public  DatabaseConnectionProxy(DatabaseConnection realConnection)
 		{
 			this.realConnection = realConnection;
@@ -26,12 +25,7 @@ namespace Quizyy_wpf.Proxy
 			
 			if (flashcardslist == null)
 			{
-				List<FlashCardsModel> rawData = realConnection.GetFlashCardsList();
-				foreach (var card in rawData)
-				{
-					card.difficultylvl = difficultyFlyweight.GetDifficultyLevel(card.difficultylvl);
-				}
-
+				List<FlashCardsModel> rawData = realConnection.GetFlashCardsList();				
 				flashcardslist = rawData;
 			}
 			return flashcardslist;
@@ -42,10 +36,6 @@ namespace Quizyy_wpf.Proxy
 			if (writelist == null)
 			{
 				List<WriteModel> rawData = realConnection.GetWriteList();
-				foreach (var question in rawData)
-				{
-					question.difficultylvl = difficultyFlyweight.GetDifficultyLevel(question.difficultylvl);
-				}
                 writelist = rawData;
 			}
 			return writelist;

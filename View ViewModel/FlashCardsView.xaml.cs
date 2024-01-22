@@ -1,4 +1,5 @@
-﻿using Quizyy_wpf.Model;
+﻿using Quizyy_wpf.Flyweight;
+using Quizyy_wpf.Model;
 using Quizyy_wpf.Proxy;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +23,7 @@ namespace Quizyy_wpf.View
 		private TextBlock? DisplayTextBlock;
 		private TextBlock? DifficultyLvlTextBlock;
 		private TextBlock? Mode;
-		private List<FlashCardsModel> items = new List<FlashCardsModel>();
+		private List<FlyFlashCardsModel> items = new List<FlyFlashCardsModel>();
 		private int currentIndex = 1;
 		private int control = 0;
 		private static FlashCardsView instance;
@@ -44,7 +45,7 @@ namespace Quizyy_wpf.View
 		{
 			mainWindow = mainView;
 			DatabaseConnectionProxy proxy2 = mainWindow.GetProxy();
-			items = proxy2.GetFlashCardsList();
+			items =DifficultyLevelFlyweight.FlyFlashCardsModels( proxy2.GetFlashCardsList());
 			defaultIterator = new FlashCardsDefaultIterator(items);
 			randomIterator = new FlashCardsRandomIterator(items);
 			by3Iterator = new FlashCardsBy3Iterator(items);
@@ -270,7 +271,7 @@ namespace Quizyy_wpf.View
 			if (items.Count > 0 && currentIndex >= 0 && currentIndex < items.Count)
 			{
 				DisplayTextBlock.Text = items[currentIndex].concept;
-				DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[currentIndex].difficultylvl;
+				DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[currentIndex].difficultylvl.Difficulty;
 				control = 1;
 			}
 		}

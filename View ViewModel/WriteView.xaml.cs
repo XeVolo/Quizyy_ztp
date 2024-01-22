@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Quizyy_wpf.Flyweight;
 using Quizyy_wpf.Model;
 using Quizyy_wpf.Observer;
 using Quizyy_wpf.Proxy;
@@ -35,8 +36,8 @@ namespace Quizyy_wpf.View
         private TextBlock? CurrentResult;
         private TextBlock? Record;
         private TextBox? TextBox;
-        private List<WriteModel> items = new List<WriteModel>();
-        private int index = 0;
+		private List<FlyWriteModel> items = new List<FlyWriteModel>();
+		private int index = 0;
         private static WriteView instance;
         public PointsManager pointsManager = new PointsManager();
 
@@ -52,7 +53,7 @@ namespace Quizyy_wpf.View
         {
             mainWindow1 = mainView;
 			DatabaseConnectionProxy proxy2 = mainWindow1.GetProxy();
-			items = proxy2.GetWriteList();
+			items = DifficultyLevelFlyweight.FlyWriteModels(proxy2.GetWriteList());
 			InitializeComponent();
             OpenMode();
         }
@@ -232,7 +233,7 @@ namespace Quizyy_wpf.View
         {
             DisplayTextBlock.Text = items[index].question;
             DifficultyLvlTextBlock.Text = "";
-			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl;
+			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl.Difficulty;
 		}
         private void ObserverDisplayer()
         {

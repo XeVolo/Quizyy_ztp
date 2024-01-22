@@ -16,18 +16,18 @@ namespace Quizyy_wpf
 		bool MovePrevious();
 	}
 
-	public class FlashCardsDefaultIterator : IIterator<FlashCardsModel>
+	public class FlashCardsDefaultIterator : IIterator<FlyFlashCardsModel>
 	{
-		public List<FlashCardsModel> items;
+		public List<FlyFlashCardsModel> items;
 		private int currentIndex;
 
-		public FlashCardsDefaultIterator(List<FlashCardsModel> items)
+		public FlashCardsDefaultIterator(List<FlyFlashCardsModel> items)
 		{
 			this.items = items;
 			this.currentIndex = 0;
 		}
 
-		public FlashCardsModel Current
+		public FlyFlashCardsModel Current
 		{
 			get { return items[currentIndex]; }
 		}
@@ -76,20 +76,20 @@ namespace Quizyy_wpf
 		}
 	}
 
-	public class FlashCardsRandomIterator : IIterator<FlashCardsModel>
+	public class FlashCardsRandomIterator : IIterator<FlyFlashCardsModel>
 	{
-		public List<FlashCardsModel> items;
+		public List<FlyFlashCardsModel> items;
 		private List<int> randomIndexes;
 		private int currentIndex;
 
-		public FlashCardsRandomIterator(List<FlashCardsModel> items)
+		public FlashCardsRandomIterator(List<FlyFlashCardsModel> items)
 		{
 			this.items = items;
 			this.randomIndexes = new List<int>();
 			this.currentIndex = 0;
 		}
 
-		public FlashCardsModel Current
+		public FlyFlashCardsModel Current
 		{
 			get { return items[currentIndex]; }
 		}
@@ -130,13 +130,13 @@ namespace Quizyy_wpf
 		}
 	}
 
-	public class FlashCardsBy3Iterator : IIterator<FlashCardsModel>
+	public class FlashCardsBy3Iterator : IIterator<FlyFlashCardsModel>
 	{
-		public List<FlashCardsModel> items;
+		public List<FlyFlashCardsModel> items;
 		private int currentIndex;
 		private int counter;
 
-		public FlashCardsBy3Iterator(List<FlashCardsModel> items)
+		public FlashCardsBy3Iterator(List<FlyFlashCardsModel> items)
 		{
 			this.items = items;
 			this.currentIndex = 0;
@@ -187,7 +187,7 @@ namespace Quizyy_wpf
 			return currentIndex;
 		}
 
-		public FlashCardsModel Current
+		public FlyFlashCardsModel Current
 		{
 			get { return items[currentIndex]; }
 		}

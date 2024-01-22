@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Quizyy_wpf.Flyweight;
 using Quizyy_wpf.Model;
 using Quizyy_wpf.Proxy;
 
@@ -33,7 +34,7 @@ namespace Quizyy_wpf.View
 		private TextBlock? DisplayTextBlock;
 		//private static RealConnection realconnection = new RealConnection();
 		//private static DatabaseProxy proxy = new DatabaseProxy(realconnection);
-		private List<WriteModel> items = new List<WriteModel>();
+		private List<FlyWriteModel> items = new List<FlyWriteModel>();
 		private int index = 0;
         private static ChooseView instance;
 
@@ -50,8 +51,7 @@ namespace Quizyy_wpf.View
             InitializeComponent();
             mainWindow = mainView;
             DatabaseConnectionProxy proxy2 = mainWindow.GetProxy();
-            items = proxy2.GetWriteList();
-
+            items= DifficultyLevelFlyweight.FlyWriteModels(proxy2.GetWriteList());
 			OpenMode();
 			
 		}
@@ -165,7 +165,7 @@ namespace Quizyy_wpf.View
         }
         private int GetRandom()
         {
-            List<WriteModel> list = items;
+            List<FlyWriteModel> list = items;
             int size = list.Count;
             Random rnd = new Random();
             int result = rnd.Next(size);
@@ -195,7 +195,7 @@ namespace Quizyy_wpf.View
         private void DisplayQuestion()
         {
             DisplayTextBlock.Text = items[index].question;
-			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl;
+			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[index].difficultylvl.Difficulty;
 		}
     }
 }

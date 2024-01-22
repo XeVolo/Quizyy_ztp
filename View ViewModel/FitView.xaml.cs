@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quizyy_wpf.Command;
+using Quizyy_wpf.Flyweight;
 using Quizyy_wpf.Model;
 using Quizyy_wpf.Proxy;
 using Quizyy_wpf.State;
@@ -49,7 +50,7 @@ namespace Quizyy_wpf.View
 		private State1 state = null;
 
 
-        private List<FlashCardsModel> items = new List<FlashCardsModel>();
+        private List<FlyFlashCardsModel> items = new List<FlyFlashCardsModel>();
 
 
 		public static FitView GetInstance(MainWindow mainView)
@@ -65,7 +66,7 @@ namespace Quizyy_wpf.View
             TransitionTo(new NoneChoosenState());
             mainWindow1 = mainView;
 			DatabaseConnectionProxy proxy2 = mainWindow1.GetProxy();
-			items = proxy2.GetFlashCardsList();
+			items =DifficultyLevelFlyweight.FlyFlashCardsModels( proxy2.GetFlashCardsList());
 			InitializeComponent();
             OpenMode();
         }
@@ -76,7 +77,7 @@ namespace Quizyy_wpf.View
         
         private int GetRandom()
         {
-            List<FlashCardsModel> lista = items;
+            List<FlyFlashCardsModel> lista = items;
             int size = lista.Count - 7;
             Random rnd = new Random();
             int result = rnd.Next(size);
@@ -101,7 +102,7 @@ namespace Quizyy_wpf.View
         }
         private void NewSet()
         {
-            List<FlashCardsModel> list = items;
+            List<FlyFlashCardsModel> list = items;
             int first = GetRandom();
             Range xy = new Range(first, first + 6);
             List<int> drawn = GetNumbers(xy);
@@ -202,7 +203,7 @@ namespace Quizyy_wpf.View
 				Height = 30,
 				Style = (Style)FindResource("CustomTextStyle")
 			};			
-			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[drawn[0]].difficultylvl;
+			DifficultyLvlTextBlock.Text = "Poziom trudności: " + items[drawn[0]].difficultylvl.Difficulty;
 			MainGrid.Children.Add(DifficultyLvlTextBlock);
 
 			MainGrid.Children.Add(undoButton);
