@@ -20,7 +20,7 @@ namespace Quizyy_wpf
 
     }
 
-	public class FlashCardsDefaultIterator : IIterator<FlyFlashCardsModel>
+	public class FlashCardsDefaultIterator : IFlashCardsIterator<FlyFlashCardsModel>
 	{
 		public List<FlyFlashCardsModel> items;
 		private int currentIndex;
@@ -84,7 +84,7 @@ namespace Quizyy_wpf
 		}
 	}
 
-	public class FlashCardsRandomIterator : IIterator<FlyFlashCardsModel>
+	public class FlashCardsRandomIterator : IFlashCardsIterator<FlyFlashCardsModel>
 	{
 		public List<FlyFlashCardsModel> items;
 		private List<int> randomIndexes;
@@ -138,7 +138,7 @@ namespace Quizyy_wpf
 		}
 	}
 
-	public class FlashCardsBy3Iterator : IIterator<FlyFlashCardsModel>
+	public class FlashCardsBy3Iterator : IFlashCardsIterator<FlyFlashCardsModel>
 	{
 		public List<FlyFlashCardsModel> items;
 		private int currentIndex;
