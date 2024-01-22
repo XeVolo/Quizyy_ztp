@@ -24,7 +24,6 @@ namespace Quizyy_wpf.View_ViewModel
         private Button? updateFlashCardsButton;
         private Button? updateWritesButton;
         private TextBlock? DisplayTextBlock;
-        private TextBox? TextBox;
         private static UpdateView instance;
 
         public static UpdateView GetInstance(MainWindow mainView)
